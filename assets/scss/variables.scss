@@ -1,0 +1,21 @@
+// text styles
+$text-sizes: (
+  large: 24px,
+  normal: 20px,
+  small: 16px
+);
+
+$text-weights: (
+  bold: 900,
+  regular: 400
+);
+
+@mixin text($size, $thickness) {
+  font-family: "Noto Sans JP", sans-serif;
+  font-size: map-get($text-sizes, $size);
+  font-weight: map-get($text-weights, $thickness);
+}
+
+$COLOR_MAIN: #d8ebf2;
+$COLOR_BLACK: #363636;
+$COLOR_WHITE: #fff;
