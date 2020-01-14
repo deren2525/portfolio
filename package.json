@@ -22,11 +22,13 @@
     "@nuxt/types": "^0.5.3",
     "@nuxt/typescript-build": "^0.3.10",
     "@nuxt/typescript-runtime": "^0.2.10",
+    "@nuxtjs/axios": "^5.9.3",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/stylelint-module": "^3.1.0",
     "@vue/test-utils": "^1.0.0-beta.27",
+    "axios": "^0.19.1",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.1.0",
     "eslint": "^6.1.0",
@@ -37,6 +39,7 @@
     "stylelint": "^10.1.0",
     "stylelint-config-standard": "^19.0.0",
     "vue-jest": "^4.0.0-0",
+    "vue-property-decorator": "^8.3.0",
     "vuex-module-decorators": "^0.11.0"
   }
 }

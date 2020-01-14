@@ -4,11 +4,7 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": [
-      "esnext",
-      "esnext.asynciterable",
-      "dom"
-    ],
+    "lib": ["esnext", "esnext.asynciterable", "dom"],
     "esModuleInterop": true,
     "allowJs": true,
     "sourceMap": true,
@@ -16,23 +12,14 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
-        "./*"
-      ],
-      "@/*": [
-        "./*"
-      ]
+      "~/*": ["./*"],
+      "@/*": ["./*"]
     },
-    "types": [
-      "@types/node",
-      "@nuxt/types"
-    ],
+    "types": ["@types/node", "@nuxt/types", "@nuxtjs/axios"],
     // https://qiita.com/ysKuga/items/e3a2a7c39ff1bd9f47b2
     "noImplicitThis": true,
     // https://github.com/championswimmer/vuex-module-decorators#typescript
-    "experimentalDecorators": true,
+    "experimentalDecorators": true
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

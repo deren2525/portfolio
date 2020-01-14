@@ -1,8 +1,8 @@
 // text styles
 $text-sizes: (
-  large: 24px,
-  normal: 20px,
-  small: 16px
+  large: 2.4rem,
+  normal: 2rem,
+  small: 1.6rem
 );
 
 $text-weights: (
@@ -19,3 +19,7 @@ $text-weights: (
 $COLOR_MAIN: #d8ebf2;
 $COLOR_BLACK: #363636;
 $COLOR_WHITE: #fff;
+
+// z-index
+$PROFILE_CONTENT_OVERLAY: 5;
+$PROFILE_CONTENT: 10;
