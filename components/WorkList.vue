@@ -1,11 +1,16 @@
 <template>
   <ul class="work-list">
     <li class="work-list__list" v-for="(item, index) in workItems" :key="index">
-      <div class="work-list__item">
-        <div class="overlay">
-          <p>{{ item }}</p>
+      <a :href="item.url" target="_blank">
+        <div class="work-list__item">
+          <div class="overlay">
+            <p>{{ item.title }}</p>
+          </div>
+          <p class="work-list__img">
+            <img :src="require(`~/assets/img/works/${item.img}`)" />
+          </p>
         </div>
-      </div>
+      </a>
     </li>
   </ul>
 </template>
@@ -15,7 +20,11 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
 export default class WorkList extends Vue {
-  @Prop({ default: {} }) workItems!: Array<string>;
+  @Prop({ default: {} }) workItems!: {
+    title: string;
+    src: string;
+    url: string;
+  };
 }
 </script>
 
@@ -23,6 +32,7 @@ export default class WorkList extends Vue {
 @import "~/assets/scss/variables";
 
 .overlay {
+  position: absolute;
   width: 0;
   height: 100%;
   display: flex;
@@ -44,7 +54,7 @@ export default class WorkList extends Vue {
   margin: 0;
 
   &__list {
-    margin-right: 10%;
+    margin-right: 3%;
     margin-bottom: 60px;
     cursor: pointer;
 
@@ -60,11 +70,18 @@ export default class WorkList extends Vue {
   }
 
   &__item {
-    width: 240px;
-    height: 240px;
+    position: relative;
+    width: 300px;
+    height: 215px;
     background: #eee;
     padding: 0;
     list-style: none;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
   }
 }
 </style>

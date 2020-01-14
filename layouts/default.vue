@@ -7,6 +7,11 @@
 <style lang="scss">
 @import "~/assets/scss/variables";
 
+html,
+body {
+  height: 100%;
+}
+
 html {
   font-family: sans-serif;
   font-size: 62.5%;
@@ -19,7 +24,7 @@ html {
 }
 
 body {
-  color: $COLOR_BLACK;
+  background: $COLOR_MAIN;
 }
 
 * {
@@ -31,6 +36,14 @@ body {
   &::after {
     content: "";
   }
+}
+
+h1,
+h2 {
+  margin: 0;
+  line-height: 6rem;
+
+  @include text(large, bold);
 }
 
 p {
@@ -46,5 +59,10 @@ a {
   &:visited {
     color: $COLOR_BLACK;
   }
+}
+
+img {
+  width: 100%;
+  height: 100%;
 }
 </style>
