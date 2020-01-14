@@ -1,7 +1,7 @@
 <template>
   <div class="sns-list-content">
     <ul class="sns-list">
-      <div class="sns-list__item" v-for="(sns, index) in snsList" :key="index">
+      <div class="sns-list__list" v-for="(sns, index) in snsList" :key="index">
         <li class="sns-list__item">
           <p class="sns-list__link">
             <a :href="sns.url" target="_blank">{{ sns.name }}</a>
@@ -64,6 +64,22 @@ export default class WorkList extends Vue {
         color: $COLOR_BLACK;
         transition: 0.8s;
       }
+    }
+  }
+}
+
+@media screen and (max-width: $BREAKPOINT_SP) {
+  .sns-list {
+    padding-bottom: 60px;
+    margin-bottom: 0;
+
+    &__item {
+      margin: 10px;
+      width: auto;
+    }
+
+    &__title {
+      margin: 0;
     }
   }
 }

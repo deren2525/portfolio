@@ -65,4 +65,46 @@ img {
   width: 100%;
   height: 100%;
 }
+
+.footer {
+  height: 280px;
+  margin-left: 120px;
+  padding: 60px 0;
+  box-sizing: border-box;
+}
+
+.pc-only {
+  display: block;
+}
+
+.sp-only {
+  display: none;
+}
+
+@media screen and (max-width: $BREAKPOINT_SP) {
+  h2 {
+    @include text(normal, bold);
+  }
+
+  .footer {
+    background: $COLOR_BLACK;
+    color: $COLOR_WHITE;
+    margin-left: 0;
+    padding: 0;
+    line-height: 6rem;
+    height: 60px;
+
+    p {
+      margin: 0 0 0 30px;
+    }
+  }
+
+  .pc-only {
+    display: none;
+  }
+
+  .sp-only {
+    display: block;
+  }
+}
 </style>

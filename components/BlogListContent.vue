@@ -90,4 +90,15 @@ export default class WorkList extends Vue {
     }
   }
 }
+
+@media screen and (max-width: $BREAKPOINT_SP) {
+  .blog-list-content {
+    margin-bottom: 60px;
+  }
+
+  .blog-list {
+    padding-left: 30px;
+    margin: 0 0 10px 0;
+  }
+}
 </style>

@@ -4,13 +4,14 @@
       <a :href="item.url" target="_blank">
         <div class="work-list__item">
           <div class="overlay">
-            <p>{{ item.title }}</p>
+            <p class="pc-only">{{ item.title }}</p>
           </div>
           <p class="work-list__img">
             <img :src="require(`~/assets/img/works/${item.img}`)" />
           </p>
         </div>
       </a>
+      <p class="work-list__title sp-only">{{ item.title }}</p>
     </li>
   </ul>
 </template>
@@ -82,6 +83,24 @@ export default class WorkList extends Vue {
     width: 100%;
     height: 100%;
     margin: 0;
+  }
+
+  &__title {
+    line-height: 6rem;
+    margin: 0 0 0 15px;
+  }
+}
+
+@media screen and (max-width: $BREAKPOINT_SP) {
+  .work-list {
+    &__list {
+      margin: 0 0 10px 0;
+    }
+
+    &__item {
+      width: 100%;
+      height: auto;
+    }
   }
 }
 </style>

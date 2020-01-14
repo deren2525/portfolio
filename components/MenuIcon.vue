@@ -27,4 +27,13 @@ export default class MenuIcon extends Vue {}
   font-weight: bold;
   cursor: pointer;
 }
+
+@media screen and (max-width: $BREAKPOINT_SP) {
+  .menu-icon {
+    width: 60px;
+    height: 60px;
+
+    @include text(large, bold);
+  }
+}
 </style>

@@ -1,10 +1,7 @@
 <template>
   <div class="container">
     <div class="profile-overlay" @click="showProfile = false" :class="{ active: showProfile }" />
-    <MenuIcon @click="
-        showProfile = true;
-        log(showProfile);
-      " />
+    <MenuIcon @click="showProfile = true;" />
     <div class="works" @click="showProfile = false">
       <div class="content">
         <h1>Works</h1>
@@ -18,17 +15,17 @@
         </section>
       </div>
       <div class="footer">
-        <p>Copyright &copy; 2019 DEREN</p>
+        <p>Copyright &copy; 2020 DEREN</p>
       </div>
     </div>
 
-    <div class="profile" :class="{ active: showProfile }" :style="styleInitProfilePosition">
+    <div class="profile" :class="{ active: showProfile }">
       <div class="profile__content">
         <h1>Profile</h1>
         <section class="section section--profile">
           <div class="profile-content">
-            <h2>DEREN</h2>
-            <p>フロントエンドエンジニアになりたい</p>
+            <h2 class="name">DEREN</h2>
+            <p>フロントエンドエンジニアみならい</p>
           </div>
           <p class="profile-img">
             <img src="~/assets/img/profile.png" />
@@ -56,13 +53,13 @@
             </div>
           </div>
           <section class="section section--work" @click="showProfile = false">
-            <h2>Works</h2>
+            <h2 class="title">Works</h2>
             <p>>>></p>
           </section>
         </section>
         <section class="section section--blog">
           <h2>Blog - Qiita</h2>
-          <BlogListContent :contribution="1208" :date="[2019, 1, 12]" :article-list="articleList" />
+          <BlogListContent :contribution="1208" :date="[2020, 1, 12]" :article-list="articleList" />
         </section>
         <section class="section section--activities">
           <h2>Activities</h2>
@@ -74,7 +71,7 @@
         </section>
       </div>
       <div class="footer">
-        <p>Copyright &copy; 2019 DEREN</p>
+        <p>Copyright &copy; 2020 DEREN</p>
       </div>
     </div>
   </div>
@@ -136,7 +133,6 @@ export default {
   computed: {
     styleInitProfilePosition() {
       const screenWidth = window.innerWidth;
-      console.log(screenWidth);
       return {
         left: -screenWidth + "px"
       };
@@ -260,6 +256,7 @@ h3 {
 .profile {
   position: fixed;
   top: 0;
+  left: -80%;
   width: 80%;
   height: 100%;
   background: $COLOR_MAIN;
@@ -303,10 +300,112 @@ h3 {
   }
 }
 
-.footer {
-  height: 280px;
-  margin-left: 120px;
-  padding: 60px 0;
-  box-sizing: border-box;
+@media screen and (max-width: $BREAKPOINT_SP) {
+  h1,
+  h2 {
+    padding-left: 10px;
+  }
+
+  .section {
+    padding: 0;
+
+    &--profile,
+    &--skill,
+    &--work,
+    &--blog,
+    &--activities,
+    &--link {
+      padding: 0 15px 0 0;
+    }
+
+    &--profile {
+      flex-wrap: wrap-reverse;
+    }
+
+    &--skill {
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    &--work {
+      position: relative;
+      right: auto;
+      bottom: auto;
+      width: calc(100% + 15px);
+      height: 150px;
+      margin-top: 60px;
+
+      .title {
+        padding: 0;
+      }
+    }
+  }
+
+  .content {
+    margin-left: 60px;
+    padding: 60px 0 30px;
+  }
+
+  .profile {
+    width: 85%;
+    left: -85%;
+
+    &__content {
+      margin: 30px 0 0 15px;
+
+      h1 {
+        padding-top: 30px;
+        background: $COLOR_WHITE;
+      }
+
+      h2 {
+        padding-top: 30px;
+      }
+
+      h3 {
+        @include text(small, bold);
+
+        margin-bottom: 15px;
+      }
+
+      .name {
+        line-height: 1.6rem;
+
+        @include text(small, bold);
+      }
+
+      p {
+        margin-left: 15px;
+      }
+    }
+  }
+
+  .profile-img {
+    margin: auto;
+  }
+
+  .profile-content {
+    margin: 30px 0;
+  }
+
+  .skill-set-content {
+    $base: &;
+
+    display: block;
+
+    &__item {
+      width: 100%;
+      margin: 20px 0 0 15px;
+
+      p {
+        margin: 0;
+        line-height: 1.6rem;
+
+        + p {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
 }
 </style>
