@@ -86,6 +86,10 @@ img {
     @include text(normal, bold);
   }
 
+  p {
+    line-height: 2rem;
+  }
+
   .footer {
     background: $COLOR_BLACK;
     color: $COLOR_WHITE;
@@ -97,6 +101,11 @@ img {
     p {
       margin: 0 0 0 30px;
     }
+  }
+
+  img {
+    border: 1px solid #363636;
+    box-sizing: border-box;
   }
 
   .pc-only {

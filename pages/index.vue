@@ -1,7 +1,11 @@
 <template>
   <div class="container">
-    <div class="profile-overlay" @click="showProfile = false" :class="{ active: showProfile }" />
-    <MenuIcon @click="showProfile = true;" />
+    <div
+      class="profile-overlay"
+      @click="showProfile = false"
+      :class="{ active: showProfile }"
+    />
+    <MenuIcon @click="showProfile = true" />
     <div class="works" @click="showProfile = false">
       <div class="content">
         <h1>Works</h1>
@@ -25,7 +29,7 @@
         <section class="section section--profile">
           <div class="profile-content">
             <h2 class="name">DEREN</h2>
-            <p>フロントエンドエンジニアみならい</p>
+            <p class="text">フロントエンドエンジニアみならい</p>
           </div>
           <p class="profile-img">
             <img src="~/assets/img/profile.png" />
@@ -59,7 +63,11 @@
         </section>
         <section class="section section--blog">
           <h2>Blog - Qiita</h2>
-          <BlogListContent :contribution="1208" :date="[2020, 1, 12]" :article-list="articleList" />
+          <BlogListContent
+            :contribution="1208"
+            :date="[2020, 1, 12]"
+            :article-list="articleList"
+          />
         </section>
         <section class="section section--activities">
           <h2>Activities</h2>
@@ -374,7 +382,7 @@ h3 {
         @include text(small, bold);
       }
 
-      p {
+      .text {
         margin-left: 15px;
       }
     }
@@ -385,7 +393,7 @@ h3 {
   }
 
   .profile-content {
-    margin: 30px 0;
+    margin: 0 0 30px 0;
   }
 
   .skill-set-content {

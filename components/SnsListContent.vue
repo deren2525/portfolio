@@ -70,6 +70,7 @@ export default class WorkList extends Vue {
 
 @media screen and (max-width: $BREAKPOINT_SP) {
   .sns-list {
+    flex-wrap: wrap;
     padding-bottom: 60px;
     margin-bottom: 0;
 

@@ -1,6 +1,10 @@
 <template>
   <div class="blog-list-content">
-    <p>{{ contribution }}contribution ({{ date[0] }}/{{ date[1] }}/{{ date[2] }}現在)</p>
+    <p>
+      {{ contribution }}contribution ({{ date[0] }}/{{ date[1] }}/{{
+        date[2]
+      }}現在)
+    </p>
     <div v-for="(article, index) in articleList" :key="index">
       <ul class="blog-list">
         <li class="blog-list__item">
@@ -94,6 +98,10 @@ export default class WorkList extends Vue {
 @media screen and (max-width: $BREAKPOINT_SP) {
   .blog-list-content {
     margin-bottom: 60px;
+
+    p {
+      margin-left: 15px;
+    }
   }
 
   .blog-list {

@@ -133,7 +133,7 @@ export async function setContext (app, context) {
       payload: context.payload,
       error: context.error,
       base: '/',
-      env: {}
+      env: {"QIITA_TOKEN":"6969d3ed130eb8816f9abe261c2dc6d835992b07"}
     }
     // Only set once
     if (context.req) {
