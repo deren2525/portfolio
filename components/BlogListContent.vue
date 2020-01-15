@@ -12,10 +12,6 @@
         </li>
       </ul>
     </div>
-    <p class="blog-other">
-      >>>
-      <a href="https://qiita.com/deren2525" target="_blank">記事一覧</a>
-    </p>
   </div>
 </template>
 
@@ -35,6 +31,7 @@ export default class WorkList extends Vue {
 
 .blog-list {
   display: inline-block;
+  padding-left: 15px;
 
   @include text(small, regular);
 
@@ -68,36 +65,9 @@ export default class WorkList extends Vue {
   }
 }
 
-.blog-other {
-  position: relative;
-  display: inline-block;
-  margin: 0;
-  padding-bottom: 5px;
-  color: $COLOR_BLACK;
-
-  @include text(small, regular);
-
-  &::before {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 1px;
-    background: $COLOR_BLACK;
-    transition: 0.8s;
-  }
-
-  &:hover {
-    &::before {
-      width: 100%;
-      transition: 0.8s;
-    }
-  }
-}
-
 @media screen and (max-width: $BREAKPOINT_SP) {
   .blog-list-content {
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 
     p {
       margin-left: 15px;
@@ -107,6 +77,7 @@ export default class WorkList extends Vue {
   .blog-list {
     padding-left: 30px;
     margin: 0 0 10px 0;
+    line-height: 2rem;
   }
 }
 </style>

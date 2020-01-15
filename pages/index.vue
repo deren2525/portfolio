@@ -68,6 +68,10 @@
             :date="[2020, 1, 12]"
             :article-list="articleList"
           />
+          <p class="blog-other">
+            >>>
+            <a href="https://qiita.com/deren2525" target="_blank">記事一覧</a>
+          </p>
         </section>
         <section class="section section--activities">
           <h2>Activities</h2>
@@ -114,7 +118,7 @@ export default {
       designWorkItems: design,
       activitiesList: [
         {
-          title: "CSSイラストレーション",
+          title: "Meguro.css@oRo LT参加（CSSイラストレーション）",
           url: "https://megurocss.connpass.com/event/135560/",
           urlTitle: "Meguro.css #6 @ oRo"
         },
@@ -297,14 +301,49 @@ h3 {
   img {
     width: 100%;
     height: 100%;
+    border: none;
   }
 }
 
 .skill-set-content {
+  $base: &;
+
   display: flex;
+  box-sizing: border-box;
 
   &__item {
     width: 50%;
+
+    & + #{$base}__item {
+      padding-left: 10px;
+    }
+  }
+}
+
+.blog-other {
+  position: relative;
+  display: inline-block;
+  margin: 0 0 30px 0;
+  padding: 0 0 5px 0;
+  color: $COLOR_BLACK;
+
+  @include text(small, regular);
+
+  &::before {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background: $COLOR_BLACK;
+    transition: 0.8s;
+  }
+
+  &:hover {
+    &::before {
+      width: 100%;
+      transition: 0.8s;
+    }
   }
 }
 
@@ -359,6 +398,7 @@ h3 {
     left: -85%;
 
     &__content {
+      overflow-x: hidden;
       margin: 30px 0 0 15px;
 
       h1 {
@@ -405,6 +445,10 @@ h3 {
       width: 100%;
       margin: 20px 0 0 15px;
 
+      & + #{$base}__item {
+        padding-left: 0;
+      }
+
       p {
         margin: 0;
         line-height: 1.6rem;
@@ -414,6 +458,11 @@ h3 {
         }
       }
     }
+  }
+
+  .blog-other {
+    padding: 0 0 5px 15px;
+    margin: 0 0 60px 0;
   }
 }
 </style>

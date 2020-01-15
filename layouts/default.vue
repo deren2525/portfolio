@@ -91,6 +91,8 @@ img {
   }
 
   .footer {
+    display: flex;
+    align-items: center;
     background: $COLOR_BLACK;
     color: $COLOR_WHITE;
     margin-left: 0;

@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-icon" @click="$emit('click')">d</div>
+  <div class="menu-icon" @click="$emit('click')">D</div>
 </template>
 
 <script lang="ts">
