@@ -24,7 +24,7 @@ const nuxtConfig: Configuration = {
         content: process.env.npm_package_description || ""
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "~/assets/img/favicon.png" }]
   },
   /*
    ** Customize the progress-bar color
