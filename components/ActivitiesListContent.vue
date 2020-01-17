@@ -6,12 +6,10 @@
         v-for="(activity, index) in activitiesList"
         :key="index"
       >
-        <p class="activities-list__title">{{ activity.title }}</p>
-        <p class="activities-list__link">
-          <a :href="activity.url" target="_blank"
-            >>>> {{ activity.urlTitle }}</a
-          >
-        </p>
+        <a :href="activity.url" target="_blank">
+          <p class="activities-list__title">{{ activity.title }}</p>
+          <p class="activities-list__link">>>>> {{ activity.urlTitle }}</p>
+        </a>
       </li>
     </ul>
   </div>
