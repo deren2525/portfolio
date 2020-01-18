@@ -3,7 +3,11 @@
     <div class="sns-list__item" v-for="(sns, index) in snsList" :key="index">
       <p class="sns-list__icon">
         <a :href="sns.url" target="_blank">
-          <img :src="require(`~/assets/img/icon/${sns.img}`)" draggable="false" :alt="sns.name" />
+          <img
+            :src="require(`~/assets/img/icon/${sns.img}`)"
+            draggable="false"
+            :alt="sns.name"
+          />
         </a>
       </p>
       <div class="tooltip">{{ sns.name }}</div>
@@ -62,7 +66,7 @@ $tooltip-width: 100px;
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    margin: 0 5% 0 0;
+    margin: 0 20px 0 0;
     &:hover {
       transition: 0.8s;
       .tooltip {
