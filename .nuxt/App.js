@@ -15,7 +15,7 @@ import _6f6c098b from '../layouts/default.vue'
 const layouts = { "_default": _6f6c098b }
 
 export default {
-  head: {"title":"portfolio","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"My Portfolio"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"}],"style":[],"script":[]},
+  head: {"htmlAttrs":{"prefix":"og: http:\u002F\u002Fogp.me\u002Fns#"},"title":"DEREN's Portfolio","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"DERENのPortfolio🐶"},{"hid":"og:type","property":"og:type","content":"website"},{"hid":"og:url","property":"og:url","content":"https:\u002F\u002Fderennoportfolio.web.app\u002F"},{"hid":"og:title","property":"og:title","content":"DEREN's Portfolio"},{"hid":"og:description","property":"og:description","content":"DERENのPortfolio🐶"},{"hid":"og:image","property":"og:image","content":"\u002Ffavicon.ico"},{"property":"article:publisher","content":"FacebookURL"},{"property":"fb:app_id","content":"FacebookAppID"},{"name":"twitter:card","content":"summary"},{"name":"twitter:site","content":"@Twitter"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"}],"style":[],"script":[]},
 
   render (h, props) {
     const loadingEl = h('NuxtLoading', { ref: 'loading' })

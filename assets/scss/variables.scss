@@ -14,7 +14,7 @@ $text-weights: (
 );
 
 @mixin text($size, $thickness) {
-  font-family: "Montserrat", "M PLUS 1p", "Noto Sans JP", sans-serif;
+  font-family: "Montserrat", "M PLUS 1p", "Noto Sans JP", "Roboto", sans-serif;
   font-size: map-get($text-sizes, $size);
   font-weight: map-get($text-weights, $thickness);
 }

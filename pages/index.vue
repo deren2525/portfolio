@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <div class="profile-overlay" v-show="showProfile" @click="styleScroll(showProfile)" />
+    <div
+      class="profile-overlay"
+      v-show="showProfile"
+      @click="styleScroll(showProfile)"
+    />
     <MenuIcon @click="styleScroll(showProfile)" />
     <div class="works">
       <div class="content">
@@ -62,10 +66,18 @@
           <h2 class="qiita-img">
             Blog
             <p>
-              <img src="~/assets/img/logo/logo-qiita.svg" alt="logo-qiita" draggable="false" />
+              <img
+                src="~/assets/img/logo/logo-qiita.svg"
+                alt="logo-qiita"
+                draggable="false"
+              />
             </p>
           </h2>
-          <BlogListContent :contribution="1208" :date="[2020, 1, 12]" :article-list="blogItems" />
+          <BlogListContent
+            :contribution="1208"
+            :date="[2020, 1, 12]"
+            :article-list="blogItems"
+          />
         </section>
         <section class="section section--activities">
           <h2>Activities</h2>
