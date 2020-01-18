@@ -1,11 +1,7 @@
 <template>
   <div class="activities-list-content">
     <ul class="activities-list">
-      <li
-        class="activities-list__item"
-        v-for="(activity, index) in activitiesList"
-        :key="index"
-      >
+      <li class="activities-list__item" v-for="(activity, index) in activitiesList" :key="index">
         <a :href="activity.url" target="_blank">
           <p class="activities-list__title">{{ activity.title }}</p>
           <p class="activities-list__link">>>>> {{ activity.urlTitle }}</p>
@@ -17,14 +13,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { IActivitiesList } from "../pages/index.vue";
 
 @Component
 export default class WorkList extends Vue {
-  @Prop({ default: {} }) activitiesList!: {
-    title: string;
-    url: string;
-    urlTitle: string;
-  };
+  @Prop() private activitiesList!: IActivitiesList[];
 }
 </script>
 
@@ -32,6 +25,7 @@ export default class WorkList extends Vue {
 @import "~/assets/scss/variables";
 
 .activities-list {
+  list-style: none;
   padding-left: 15px;
 
   &__title {
@@ -39,10 +33,19 @@ export default class WorkList extends Vue {
   }
 
   &__item {
+    position: relative;
     margin: 0;
     color: $COLOR_BLACK;
-
     @include text(small, regular);
+    &::before {
+      position: absolute;
+      top: calc(1.6rem / 2);
+      left: -15px;
+      width: 3px;
+      height: 3px;
+      background: $COLOR_BLACK;
+      border-radius: 50%;
+    }
   }
 
   &__link {
@@ -51,27 +54,7 @@ export default class WorkList extends Vue {
     margin: 0;
     padding-bottom: 5px;
 
-    &::before {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 0;
-      height: 1px;
-      background: $COLOR_BLACK;
-      transition: 0.8s;
-    }
-
-    &:hover {
-      &::before {
-        width: 100%;
-        transition: 0.8s;
-      }
-
-      a {
-        color: #000;
-        transition: 0.8s;
-      }
-    }
+    @include link-border;
   }
 }
 
@@ -81,10 +64,10 @@ export default class WorkList extends Vue {
   }
 
   .activities-list {
-    padding-left: 30px;
+    padding: 0 0 60px 30px;
 
     &__item {
-      margin: 0 0 10px 0;
+      margin: 0 0 15px 0;
     }
 
     &__title {

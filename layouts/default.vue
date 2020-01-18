@@ -31,7 +31,6 @@ body {
   &:hover {
     transition: 0.8s;
   }
-
   &::before,
   &::after {
     content: "";
@@ -45,14 +44,12 @@ h2 {
 
   @include text(large, bold);
 }
-
 p {
   @include text(small, regular);
 }
 
 a {
   text-decoration: none;
-
   &:focus,
   &:link,
   &:active,
@@ -69,8 +66,9 @@ img {
 .footer {
   height: 280px;
   margin-left: 120px;
-  padding: 60px 0;
+  padding: 50px 0;
   box-sizing: border-box;
+  color: $COLOR_WHITE;
 }
 
 .pc-only {
@@ -91,16 +89,16 @@ img {
   }
 
   .footer {
-    display: flex;
     align-items: center;
     background: $COLOR_BLACK;
     color: $COLOR_WHITE;
     margin-left: 0;
     padding: 0;
     line-height: 6rem;
-    height: 60px;
+    height: auto;
 
-    p {
+    .copyright {
+      padding-bottom: 30px;
       margin: 0 0 0 30px;
     }
   }

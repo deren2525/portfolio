@@ -6,6 +6,9 @@ module.exports = {
     "at-rule-no-unknown": [
       true,
       { ignoreAtRules: ["include", "mixin", "each"] }
-    ]
+    ],
+    "at-rule-empty-line-before": null,
+    "rule-empty-line-before": null,
+    "declaration-empty-line-before": null
   }
 };

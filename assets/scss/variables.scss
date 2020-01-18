@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap&subset=japanese");
+@import url("https://fonts.googleapis.com/css?family=M+PLUS+1p:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
 // text styles
 $text-sizes: (
   large: 2.4rem,
@@ -11,17 +14,49 @@ $text-weights: (
 );
 
 @mixin text($size, $thickness) {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Montserrat", "M PLUS 1p", "Noto Sans JP", sans-serif;
   font-size: map-get($text-sizes, $size);
   font-weight: map-get($text-weights, $thickness);
 }
 
 $COLOR_MAIN: #5584a6;
-$COLOR_BLACK: #363636;
+$COLOR_BLACK: #1a1919;
 $COLOR_WHITE: #fff;
+$COLOR_LINK_BD: #d1d1d1;
+$COLOR_LINK_BD_ACTIVE: #1a1919;
 
 // z-index
 $PROFILE_CONTENT_OVERLAY: 5;
 $PROFILE_CONTENT: 10;
 
 $BREAKPOINT_SP: 768px;
+
+// link
+@mixin link-border {
+  &::before,
+  &::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    transition: 0.9s;
+  }
+  &::before {
+    width: 100%;
+    background: $COLOR_LINK_BD;
+  }
+  &::after {
+    width: 0;
+    background: $COLOR_LINK_BD_ACTIVE;
+  }
+  &:hover {
+    &::after {
+      width: 100%;
+      transition: 0.8s;
+    }
+    a {
+      color: $COLOR_BLACK;
+      transition: 0.8s;
+    }
+  }
+}

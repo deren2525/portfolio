@@ -32,7 +32,6 @@ export default class MenuIcon extends Vue {}
   .menu-icon {
     width: 60px;
     height: 60px;
-
     @include text(large, bold);
   }
 }

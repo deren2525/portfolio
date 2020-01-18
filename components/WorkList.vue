@@ -7,7 +7,11 @@
             <p class="work-list__title pc-only">{{ item.title }}</p>
           </div>
           <p class="work-list__img">
-            <img :src="require(`~/assets/img/works/${item.img}`)" />
+            <img
+              :src="require(`~/assets/img/works/${item.img}`)"
+              :alt="item.title"
+              draggable="false"
+            />
           </p>
         </div>
       </a>
@@ -18,14 +22,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { IWorkList } from "../pages/index.vue";
 
 @Component
 export default class WorkList extends Vue {
-  @Prop({ default: {} }) workItems!: {
-    title: string;
-    src: string;
-    url: string;
-  };
+  @Prop() private workItems!: IWorkList[];
 }
 </script>
 
@@ -47,22 +48,20 @@ export default class WorkList extends Vue {
 
 .work-list {
   $base: &;
-
   display: flex;
   flex-wrap: wrap;
   list-style: none;
   padding: 0;
   margin: 0;
-
+  user-select: none;
   &__list {
-    margin-right: 3%;
+    margin-right: 2%;
     margin-bottom: 60px;
+    transition: 0.8s;
     cursor: pointer;
-
     &:last-of-type {
       margin: 0;
     }
-
     &:hover {
       .overlay {
         width: 100%;
@@ -74,7 +73,6 @@ export default class WorkList extends Vue {
     &.pc-only {
       white-space: nowrap;
     }
-
     &.sp-only {
       line-height: 6rem;
       margin: 0 0 0 15px;
@@ -89,7 +87,6 @@ export default class WorkList extends Vue {
     padding: 0;
     list-style: none;
   }
-
   &__img {
     width: 100%;
     height: 100%;
@@ -102,13 +99,11 @@ export default class WorkList extends Vue {
     &__list {
       margin: 0 0 10px 0;
     }
-
     &__item {
       width: 100%;
       height: auto;
     }
   }
-
   .overlay {
     display: none;
   }

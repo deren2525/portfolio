@@ -1,14 +1,10 @@
 <template>
   <div class="container">
-    <div
-      class="profile-overlay"
-      @click="showProfile = false"
-      :class="{ active: showProfile }"
-    />
-    <MenuIcon @click="showProfile = true" />
-    <div class="works" @click="showProfile = false">
+    <div class="profile-overlay" v-show="showProfile" @click="styleScroll(showProfile)" />
+    <MenuIcon @click="styleScroll(showProfile)" />
+    <div class="works">
       <div class="content">
-        <h1>Works</h1>
+        <h1>DEREN's Works</h1>
         <section class="section">
           <h2>Art - CodePen -</h2>
           <WorkList :workItems="codePenWorkItems" />
@@ -19,7 +15,8 @@
         </section>
       </div>
       <div class="footer">
-        <p>Copyright &copy; 2020 DEREN</p>
+        <SnsListContent :snsList="snsList" />
+        <p class="copyright">Copyright &copy; 2020 DEREN</p>
       </div>
     </div>
 
@@ -32,7 +29,7 @@
             <p class="text">フロントエンドエンジニアみならい</p>
           </div>
           <p class="profile-img">
-            <img src="~/assets/img/profile.png" />
+            <img src="~/assets/img/profile.png" alt="deren" draggable="false" />
           </p>
         </section>
         <section class="section section--skill">
@@ -62,48 +59,63 @@
           </section>
         </section>
         <section class="section section--blog">
-          <h2>Blog - Qiita</h2>
-          <BlogListContent
-            :contribution="1208"
-            :date="[2020, 1, 12]"
-            :article-list="articleList"
-          />
-          <p class="blog-other">
-            >>>
-            <a href="https://qiita.com/deren2525" target="_blank">記事一覧</a>
-          </p>
+          <h2 class="qiita-img">
+            Blog
+            <p>
+              <img src="~/assets/img/logo/logo-qiita.svg" alt="logo-qiita" draggable="false" />
+            </p>
+          </h2>
+          <BlogListContent :contribution="1208" :date="[2020, 1, 12]" :article-list="blogItems" />
         </section>
         <section class="section section--activities">
           <h2>Activities</h2>
           <ActivitiesListContent :activities-list="activitiesList" />
         </section>
-        <section class="section section--link">
-          <h2>Links / SNS</h2>
-          <SnsListContent :sns-list="snsList" />
-        </section>
       </div>
       <div class="footer">
-        <p>Copyright &copy; 2020 DEREN</p>
+        <SnsListContent :snsList="snsList" />
+        <p class="copyright">Copyright &copy; 2020 DEREN</p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import axios from "axios";
 import { Component, Vue } from "vue-property-decorator";
+import { Context } from "@nuxt/types";
+
 import MenuIcon from "~/components/MenuIcon.vue";
 import WorkList from "~/components/WorkList.vue";
 import BlogListContent from "~/components/BlogListContent.vue";
 import SnsListContent from "~/components/SnsListContent.vue";
 import ActivitiesListContent from "~/components/ActivitiesListContent.vue";
-import $axios from "axios";
-import codePen from "~/assets/data/codePen.json";
-import design from "~/assets/data/design.json";
+
+import codePenData from "~/assets/data/codePen.json";
+import designData from "~/assets/data/design.json";
+import activitiesData from "~/assets/data/activities.json";
+import snsData from "~/assets/data/sns.json";
 
 // qiita api URL
 const BASE_URL = "https://qiita.com/api/v2/";
 
-export default {
+export interface IActivitiesList {
+  title: string;
+  url: string;
+  urlTitle: string;
+}
+export interface ISnsList {
+  name: string;
+  url: string;
+  img: string;
+}
+export interface IWorkList {
+  title: string;
+  img: string;
+  url: string;
+}
+
+@Component({
   components: {
     MenuIcon,
     WorkList,
@@ -111,70 +123,62 @@ export default {
     SnsListContent,
     ActivitiesListContent
   },
-  data() {
-    return {
-      showProfile: false,
-      codePenWorkItems: codePen,
-      designWorkItems: design,
-      activitiesList: [
-        {
-          title: "Meguro.css@oRo LT参加（CSSイラストレーション）",
-          url: "https://megurocss.connpass.com/event/135560/",
-          urlTitle: "Meguro.css #6 @ oRo"
-        },
-        {
-          title: "三重の小学校4校へプログラミング授業を実施",
-          url: "https://www.nikkan.co.jp/articles/view/00496392",
-          urlTitle: "日刊工業新聞"
-        }
-      ],
-      snsList: [
-        { name: "Twitter", url: "https://twitter.com/study_dedede" },
-        { name: "CodePen", url: "https://codepen.io/deren2525/" },
-        { name: "Qiita", url: "https://qiita.com/deren2525" },
-        { name: "Github", url: "https://github.com/deren2525" },
-        { name: "slides", url: "https://slides.com/deren" }
-      ]
-    };
-  },
-  methods: {
-    log(text: string) {
-      console.log(text);
+  head: {
+    bodyAttrs: {
+      class: "body-class"
     }
-  },
-  computed: {
-    styleInitProfilePosition() {
-      const screenWidth = window.innerWidth;
-      return {
-        left: -screenWidth + "px"
-      };
-    }
-  },
-  async asyncData({ env }: { env: any }) {
-    const response = await $axios.get(BASE_URL + "authenticated_user/items", {
-      headers: {
-        Authorization: `Bearer ${env.QIITA_TOKEN}`
-      },
-      params: {
-        page: 1,
-        per_page: 5
-      }
-    });
-    return { articleList: response.data };
   }
-};
+})
+export default class index extends Vue {
+  blogItems: any = [];
+  showProfile: boolean = false;
+  codePenWorkItems: IWorkList[] = codePenData;
+  designWorkItems: IWorkList[] = designData;
+  activitiesList: IActivitiesList[] = activitiesData;
+  snsList: ISnsList[] = snsData;
+
+  styleScroll(showProfile: boolean) {
+    if (showProfile) {
+      document.body.style.overflow = "auto";
+    } else {
+      document.body.style.overflow = "hidden";
+    }
+    return (this.showProfile = !this.showProfile);
+  }
+
+  getApi(token: any) {
+    axios
+      .get(BASE_URL + "authenticated_user/items", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        params: {
+          page: 1,
+          per_page: 5
+        }
+      })
+      .then(response => (this.blogItems = response.data));
+  }
+  created() {
+    this.getApi(process.env.QIITA_TOKEN);
+  }
+}
 </script>
 
 <style lang="scss">
 @import "~/assets/scss/variables";
 
+body {
+  &.isScroll {
+    overflow: hidden;
+  }
+}
+
 h1 {
   padding-left: 30px;
 }
-
 h3 {
   margin: 0 0 30px 0;
-
   @include text(normal, bold);
 }
 
@@ -187,7 +191,6 @@ h3 {
 .section {
   padding: 60px 30px 0;
   background: $COLOR_WHITE;
-
   &--profile,
   &--skill,
   &--work,
@@ -196,17 +199,14 @@ h3 {
   &--link {
     padding-bottom: 60px;
   }
-
   &--profile {
     display: flex;
     border-bottom: 1px solid $COLOR_BLACK;
   }
-
   &--skill {
     position: relative;
     margin-bottom: 150px;
   }
-
   &--work {
     position: absolute;
     right: 0;
@@ -220,17 +220,11 @@ h3 {
     color: $COLOR_WHITE;
     box-sizing: border-box;
     cursor: pointer;
-
     p {
       @include text(regular, bold);
     }
   }
-
   &--blog {
-    border-bottom: 1px solid $COLOR_BLACK;
-  }
-
-  &--activities {
     border-bottom: 1px solid $COLOR_BLACK;
   }
 }
@@ -254,15 +248,9 @@ h3 {
   height: 100%;
   background: rgba($COLOR_BLACK, 0.9);
   cursor: pointer;
-  opacity: 0;
+  opacity: 1;
   transition: 0.8s;
-  z-index: -1;
-
-  &.active {
-    opacity: 1;
-    transition: 0.8s;
-    z-index: $PROFILE_CONTENT_OVERLAY;
-  }
+  z-index: $PROFILE_CONTENT_OVERLAY;
 }
 
 .profile {
@@ -275,15 +263,12 @@ h3 {
   transition: 0.8s;
   overflow: scroll;
   z-index: $PROFILE_CONTENT;
-
   &.active {
     left: 0 !important;
     transition: 0.8s;
   }
-
   &__content {
     margin: 60px 0 0 120px;
-
     h1 {
       padding-top: 60px;
       background: $COLOR_WHITE;
@@ -297,7 +282,6 @@ h3 {
   height: 120px;
   margin-right: 10%;
   margin-left: auto;
-
   img {
     width: 100%;
     height: 100%;
@@ -307,42 +291,28 @@ h3 {
 
 .skill-set-content {
   $base: &;
-
   display: flex;
   box-sizing: border-box;
-
   &__item {
     width: 50%;
-
     & + #{$base}__item {
       padding-left: 10px;
     }
   }
 }
 
-.blog-other {
-  position: relative;
-  display: inline-block;
-  margin: 0 0 30px 0;
-  padding: 0 0 5px 0;
-  color: $COLOR_BLACK;
-
-  @include text(small, regular);
-
-  &::before {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 1px;
-    background: $COLOR_BLACK;
-    transition: 0.8s;
-  }
-
-  &:hover {
-    &::before {
+.qiita-img {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  width: 100px;
+  p {
+    width: 100px;
+    min-width: 100px;
+    height: 60px;
+    margin: 0 0 0 30px;
+    img {
       width: 100%;
-      transition: 0.8s;
     }
   }
 }
@@ -352,10 +322,8 @@ h3 {
   h2 {
     padding-left: 10px;
   }
-
   .section {
     padding: 0;
-
     &--profile,
     &--skill,
     &--work,
@@ -364,16 +332,13 @@ h3 {
     &--link {
       padding: 0 15px 0 0;
     }
-
     &--profile {
       flex-wrap: wrap-reverse;
     }
-
     &--skill {
       padding-bottom: 0;
       margin-bottom: 0;
     }
-
     &--work {
       position: relative;
       right: auto;
@@ -381,8 +346,8 @@ h3 {
       width: calc(100% + 15px);
       height: 150px;
       margin-top: 60px;
-
       .title {
+        user-select: none;
         padding: 0;
       }
     }
@@ -396,32 +361,24 @@ h3 {
   .profile {
     width: 85%;
     left: -85%;
-
     &__content {
       overflow-x: hidden;
       margin: 30px 0 0 15px;
-
       h1 {
         padding-top: 30px;
         background: $COLOR_WHITE;
       }
-
       h2 {
         padding-top: 30px;
       }
-
       h3 {
         @include text(small, bold);
-
         margin-bottom: 15px;
       }
-
       .name {
         line-height: 1.6rem;
-
         @include text(small, bold);
       }
-
       .text {
         margin-left: 15px;
       }
@@ -438,21 +395,16 @@ h3 {
 
   .skill-set-content {
     $base: &;
-
     display: block;
-
     &__item {
       width: 100%;
       margin: 20px 0 0 15px;
-
       & + #{$base}__item {
         padding-left: 0;
       }
-
       p {
         margin: 0;
         line-height: 1.6rem;
-
         + p {
           margin-top: 10px;
         }
@@ -460,9 +412,11 @@ h3 {
     }
   }
 
-  .blog-other {
-    padding: 0 0 5px 15px;
-    margin: 0 0 60px 0;
+  .qiita-img {
+    img {
+      width: 100%;
+      border: none;
+    }
   }
 }
 </style>

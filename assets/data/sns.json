@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Twitter",
+    "url": "https://twitter.com/study_dedede",
+    "img": "icon-twitter.svg"
+  },
+  {
+    "name": "CodePen",
+    "url": "https://codepen.io/deren2525/",
+    "img": "icon-codepen.svg"
+  },
+  {
+    "name": "Github",
+    "url": "https://github.com/deren2525",
+    "img": "icon-github.svg"
+  }
+]
