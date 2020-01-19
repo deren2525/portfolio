@@ -1,3 +1,3 @@
 # Deren's Portfolio
-Nuxt × TypeScript
+Nuxt × TypeScript  
 https://derennoportfolio.web.app/
