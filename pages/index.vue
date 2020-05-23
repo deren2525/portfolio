@@ -74,8 +74,8 @@
             </p>
           </h2>
           <BlogListContent
-            :contribution="1208"
-            :date="[2020, 1, 12]"
+            :contribution="1232"
+            :date="[2020, 5, 4]"
             :article-list="blogItems"
           />
         </section>
