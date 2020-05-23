@@ -30,7 +30,7 @@
         <section class="section section--profile">
           <div class="profile-content">
             <h2 class="name">DEREN</h2>
-            <p class="text">フロントエンドエンジニアみならい</p>
+            <p class="text">フロントエンドのお仕事をしてる</p>
           </div>
           <p class="profile-img">
             <img src="~/assets/img/profile.png" alt="deren" draggable="false" />
@@ -133,13 +133,13 @@ export interface IWorkList {
     WorkList,
     BlogListContent,
     SnsListContent,
-    ActivitiesListContent
+    ActivitiesListContent,
   },
   head: {
     bodyAttrs: {
-      class: "body-class"
-    }
-  }
+      class: "body-class",
+    },
+  },
 })
 export default class index extends Vue {
   blogItems: any = [];
@@ -162,14 +162,14 @@ export default class index extends Vue {
     axios
       .get(BASE_URL + "authenticated_user/items", {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         params: {
           page: 1,
-          per_page: 5
-        }
+          per_page: 5,
+        },
       })
-      .then(response => (this.blogItems = response.data));
+      .then((response) => (this.blogItems = response.data));
   }
   created() {
     this.getApi(process.env.QIITA_TOKEN);
