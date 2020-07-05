@@ -67,6 +67,9 @@ export default class WorkList extends Vue {
         width: 100%;
       }
     }
+    img {
+      object-fit: cover;
+    }
   }
 
   &__title {

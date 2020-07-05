@@ -1,10 +1,6 @@
 <template>
   <div class="container">
-    <div
-      class="profile-overlay"
-      v-show="showProfile"
-      @click="styleScroll(showProfile)"
-    />
+    <div class="profile-overlay" v-show="showProfile" @click="styleScroll(showProfile)" />
     <MenuIcon @click="styleScroll(showProfile)" />
     <div class="works">
       <div class="content">
@@ -66,18 +62,10 @@
           <h2 class="qiita-img">
             Blog
             <p>
-              <img
-                src="~/assets/img/logo/logo-qiita.svg"
-                alt="logo-qiita"
-                draggable="false"
-              />
+              <img src="~/assets/img/logo/logo-qiita.svg" alt="logo-qiita" draggable="false" />
             </p>
           </h2>
-          <BlogListContent
-            :contribution="1232"
-            :date="[2020, 5, 4]"
-            :article-list="blogItems"
-          />
+          <BlogListContent :contribution="1246" :date="[2020, 7, 6]" :article-list="blogItems" />
         </section>
         <section class="section section--activities">
           <h2>Activities</h2>
@@ -133,13 +121,13 @@ export interface IWorkList {
     WorkList,
     BlogListContent,
     SnsListContent,
-    ActivitiesListContent,
+    ActivitiesListContent
   },
   head: {
     bodyAttrs: {
-      class: "body-class",
-    },
-  },
+      class: "body-class"
+    }
+  }
 })
 export default class index extends Vue {
   blogItems: any = [];
@@ -162,14 +150,14 @@ export default class index extends Vue {
     axios
       .get(BASE_URL + "authenticated_user/items", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`
         },
         params: {
           page: 1,
-          per_page: 5,
-        },
+          per_page: 5
+        }
       })
-      .then((response) => (this.blogItems = response.data));
+      .then(response => (this.blogItems = response.data));
   }
   created() {
     this.getApi(process.env.QIITA_TOKEN);
