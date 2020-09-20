@@ -26,9 +26,9 @@ export default {
     }
   },
   computed: {
-    options: () => (false),
+    options: () => ({"position":"bottom-right","backgroundColor":"#2E495E","color":"#00C48D"}),
     indicatorStyle () {
-      const [ d1, d2 ] = this.options.position.split('-')
+      const [d1, d2] = this.options.position.split('-')
       return {
         [d1]: '20px',
         [d2]: '20px',
@@ -136,6 +136,7 @@ svg {
   display: inline-block;
   vertical-align: baseline;
   width: 1.1em;
+  height: 0.825em;
   position: relative;
   top: 1px;
 }

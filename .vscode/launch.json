@@ -9,7 +9,10 @@
       "request": "launch",
       "name": "Launch via NPM",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run-script", "debug"],
+      "runtimeArgs": [
+        "run-script",
+        "debug"
+      ],
       "port": 9229,
       "sourceMaps": true
     },
@@ -24,7 +27,10 @@
   "compounds": [
     {
       "name": "Full-stack",
-      "configurations": ["Launch via NPM", "Launch Chrome"]
+      "configurations": [
+        "Launch via NPM",
+        "Launch Chrome"
+      ]
     }
   ]
 }

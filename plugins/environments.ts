@@ -1,15 +1,20 @@
-// https://qiita.com/potato4d/items/5e267b828cfaba2ac960
-export type EnvironmentVariables = {
-  NODE_ENV: string
-  browser: boolean
-  client: boolean
-  mode: 'spa' | 'universal'
-  modern: boolean
-  server: boolean
-  static: boolean
+import { Context } from '@nuxt/types'
+require('dotenv').config()
+
+export interface EnvironmentsVariables {
+  [key: string]: any; // environments[key]の型エラー対策
+  NODE_ENV: string;
+  browser: boolean;
+  client: boolean;
+  mode: 'spa' | 'universal';
+  modern: boolean;
+  server: boolean;
+  static: boolean;
+  QIITA_TOKEN: string;
 }
 
-export const environments: EnvironmentVariables = {
+export const environments: EnvironmentsVariables = {
+  // Nuxt.js default environment value
   NODE_ENV: process.env.NODE_ENV!,
   browser: process.browser!,
   client: process.client!,
@@ -17,24 +22,10 @@ export const environments: EnvironmentVariables = {
   modern: process.modern!,
   server: process.server!,
   static: process.static!,
+  // custom environment value
+  QIITA_TOKEN: process.env.QIITA_TOKEN!
 }
 
-export const validate = () => {
-  if (!process.env.CI) {
-    Object.entries(environments).forEach(([key, value]) => {
-      if (['browser', 'client', 'mode', 'modern', 'server', 'static'].includes(key)) {
-        return
-      }
-      // @ts-ignore
-      if (environments[key] === undefined || environments[key] === null) {
-        console.error(`Missing environment variable: '${key}'`)
-        process.exit(1)
-      }
-    })
-  }
-}
-
-// @ts-ignore
-export default (context, inject: (name: string, v: any) => any) => {
+export default (_context: Context, inject: (name: string, value: any) => any) => {
   inject('environments', environments)
 }

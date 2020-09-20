@@ -1,7 +1,7 @@
 <template>
   <div class="activities-list-content">
     <ul class="activities-list">
-      <li class="activities-list__item" v-for="(activity, index) in activitiesList" :key="index">
+      <li v-for="(activity, index) in activitiesList" :key="index" class="activities-list__item">
         <a :href="activity.url" target="_blank">
           <p class="activities-list__title">{{ activity.title }}</p>
           <p class="activities-list__link">>>>> {{ activity.urlTitle }}</p>
@@ -12,18 +12,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { IActivitiesList } from "../pages/index.vue";
+import Vue from 'vue';
 
-@Component
-export default class WorkList extends Vue {
-  @Prop() private activitiesList!: IActivitiesList[];
-}
+export default Vue.extend({
+  props: {
+    activitiesList: {
+      type: Array,
+      required: false,
+      default: () => []
+    }
+  }
+});
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/scss/variables";
-
 .activities-list {
   list-style: none;
   padding-left: 15px;

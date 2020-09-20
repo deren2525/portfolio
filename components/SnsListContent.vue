@@ -1,32 +1,37 @@
 <template>
   <div class="sns-list">
-    <div class="sns-list__item" v-for="(sns, index) in snsList" :key="index">
+    <div v-for="(sns, index) in snsList" :key="index" class="sns-list__item">
       <p class="sns-list__icon">
         <a :href="sns.url" target="_blank">
           <img
             :src="require(`~/assets/img/icon/${sns.img}`)"
             draggable="false"
             :alt="sns.name"
-          />
+          >
         </a>
       </p>
-      <div class="tooltip">{{ sns.name }}</div>
+      <div class="tooltip">
+        {{ sns.name }}
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { ISnsList } from "../pages/index.vue";
+import Vue from 'vue';
 
-@Component
-export default class WorkList extends Vue {
-  @Prop() private snsList!: ISnsList[];
-}
+export default Vue.extend({
+  props: {
+    snsList: {
+      type: Array,
+      required: false,
+      default: () => []
+    }
+  }
+});
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/scss/variables";
 $tooltip-width: 100px;
 
 .tooltip {

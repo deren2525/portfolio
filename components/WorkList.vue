@@ -1,6 +1,6 @@
 <template>
   <ul class="work-list">
-    <li class="work-list__list" v-for="(item, index) in workItems" :key="index">
+    <li v-for="(item, index) in workItems" :key="index" class="work-list__list">
       <a :href="item.url" target="_blank">
         <div class="work-list__item">
           <div class="overlay">
@@ -11,28 +11,32 @@
               :src="require(`~/assets/img/works/${item.img}`)"
               :alt="item.title"
               draggable="false"
-            />
+            >
           </p>
         </div>
       </a>
-      <p class="work-list__title sp-only">▲ {{ item.title }}</p>
+      <p class="work-list__title sp-only">
+        ▲ {{ item.title }}
+      </p>
     </li>
   </ul>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
-import { IWorkList } from "../pages/index.vue";
+import Vue from 'vue';
 
-@Component
-export default class WorkList extends Vue {
-  @Prop() private workItems!: IWorkList[];
-}
+export default Vue.extend({
+  props: {
+    workItems: {
+      type: Array,
+      required: false,
+      default: () => []
+    }
+  }
+});
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/scss/variables";
-
 .overlay {
   position: absolute;
   width: 0;

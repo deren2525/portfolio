@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap&subset=japanese");
+@import url("https://fonts.googleapis.com/css?family=M+PLUS+1p:400,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
+
+html, body, #__nuxt, #__layout, .default  {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Montserrat", "M PLUS 1p", "Noto Sans JP", "Roboto", sans-serif;
+  @include text(small, regular);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

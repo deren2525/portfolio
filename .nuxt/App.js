@@ -1,22 +1,19 @@
 import Vue from 'vue'
 
-import {
-  getMatchedComponentsInstances,
-  promisify,
-  globalHandleError
-} from './utils'
+import { getMatchedComponentsInstances, getChildrenComponentInstancesUsingFetch, promisify, globalHandleError, urlJoin, sanitizeComponent } from './utils'
 
 import NuxtLoading from './components/nuxt-loading.vue'
+import NuxtBuildIndicator from './components/nuxt-build-indicator'
 
 import '../node_modules/normalize.css/normalize.css'
 
+import '../assets/scss/base.scss'
+
 import _6f6c098b from '../layouts/default.vue'
 
-const layouts = { "_default": _6f6c098b }
+const layouts = { "_default": sanitizeComponent(_6f6c098b) }
 
 export default {
-  head: {"htmlAttrs":{"prefix":"og: http:\u002F\u002Fogp.me\u002Fns#"},"title":"DEREN's Portfolio","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"DERENのPortfolio🐶"},{"hid":"og:type","property":"og:type","content":"website"},{"hid":"og:url","property":"og:url","content":"https:\u002F\u002Fderennoportfolio.web.app\u002F"},{"hid":"og:title","property":"og:title","content":"DEREN's Portfolio"},{"hid":"og:description","property":"og:description","content":"DERENのPortfolio🐶"},{"hid":"og:image","property":"og:image","content":"\u002Ffavicon.ico"},{"property":"article:publisher","content":"FacebookURL"},{"property":"fb:app_id","content":"FacebookAppID"},{"name":"twitter:card","content":"summary"},{"name":"twitter:site","content":"@Twitter"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"}],"style":[],"script":[]},
-
   render (h, props) {
     const loadingEl = h('NuxtLoading', { ref: 'loading' })
 
@@ -26,7 +23,7 @@ export default {
         id: '__layout'
       },
       key: this.layoutName
-    }, [ layoutEl ])
+    }, [layoutEl])
 
     const transitionEl = h('transition', {
       props: {
@@ -41,7 +38,7 @@ export default {
           })
         }
       }
-    }, [ templateEl ])
+    }, [templateEl])
 
     return h('div', {
       domProps: {
@@ -49,7 +46,7 @@ export default {
       }
     }, [
       loadingEl,
-
+      h(NuxtBuildIndicator),
       transitionEl
     ])
   },
@@ -58,8 +55,10 @@ export default {
     isOnline: true,
 
     layout: null,
-    layoutName: ''
-  }),
+    layoutName: '',
+
+    nbFetching: 0
+    }),
 
   beforeCreate () {
     Vue.util.defineReactive(this, 'nuxt', this.$options.nuxt)
@@ -67,8 +66,8 @@ export default {
   created () {
     // Add this.$nuxt in child instances
     Vue.prototype.$nuxt = this
-    // add to window so we can listen when ready
     if (process.client) {
+      // add to window so we can listen when ready
       window.$nuxt = this
 
       this.refreshOnlineStatus()
@@ -82,9 +81,10 @@ export default {
     this.context = this.$options.context
   },
 
-  mounted () {
+  async mounted () {
     this.$loading = this.$refs.loading
   },
+
   watch: {
     'nuxt.err': 'errorChanged'
   },
@@ -92,7 +92,11 @@ export default {
   computed: {
     isOffline () {
       return !this.isOnline
-    }
+    },
+
+    isFetching () {
+      return this.nbFetching > 0
+    },
   },
 
   methods: {
@@ -120,8 +124,17 @@ export default {
       const promises = pages.map((page) => {
         const p = []
 
-        if (page.$options.fetch) {
+        // Old fetch
+        if (page.$options.fetch && page.$options.fetch.length) {
           p.push(promisify(page.$options.fetch, this.context))
+        }
+        if (page.$fetch) {
+          p.push(page.$fetch())
+        } else {
+          // Get all component instance to call $fetch
+          for (const component of getChildrenComponentInstancesUsingFetch(page.$vnode.componentInstance)) {
+            p.push(component.$fetch())
+          }
         }
 
         if (page.$options.asyncData) {
@@ -140,25 +153,38 @@ export default {
       try {
         await Promise.all(promises)
       } catch (error) {
-        this.$loading.fail()
+        this.$loading.fail(error)
         globalHandleError(error)
         this.error(error)
       }
       this.$loading.finish()
     },
-
     errorChanged () {
-      if (this.nuxt.err && this.$loading) {
-        if (this.$loading.fail) {
-          this.$loading.fail()
+      if (this.nuxt.err) {
+        if (this.$loading) {
+          if (this.$loading.fail) {
+            this.$loading.fail(this.nuxt.err)
+          }
+          if (this.$loading.finish) {
+            this.$loading.finish()
+          }
         }
-        if (this.$loading.finish) {
-          this.$loading.finish()
+
+        let errorLayout = (NuxtError.options || NuxtError).layout;
+
+        if (typeof errorLayout === 'function') {
+          errorLayout = errorLayout(this.context)
         }
+
+        this.setLayout(errorLayout)
       }
     },
 
     setLayout (layout) {
+      if(layout && typeof layout !== 'string') {
+        throw new Error('[nuxt] Avoid using non-string value as layout property.')
+      }
+
       if (!layout || !layouts['_' + layout]) {
         layout = 'default'
       }
@@ -171,7 +197,7 @@ export default {
         layout = 'default'
       }
       return Promise.resolve(layouts['_' + layout])
-    }
+    },
   },
 
   components: {

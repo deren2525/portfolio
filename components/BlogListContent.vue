@@ -2,7 +2,7 @@
   <div class="blog-list-content">
     <p>
       {{ contribution }}contribution ({{ date[0] }}/{{ date[1] }}/{{
-      date[2]
+        date[2]
       }}現在)
     </p>
     <div v-for="(article, index) in articleList" :key="index">
@@ -20,19 +20,30 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import Vue from 'vue';
 
-@Component
-export default class WorkList extends Vue {
-  @Prop() private articleList!: any;
-  @Prop() private contribution!: number;
-  @Prop() private date!: number[];
-}
+export default Vue.extend({
+  props: {
+    articleList: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    contribution: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    date: {
+      type: Array,
+      required: false,
+      default: () => []
+    }
+  }
+});
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/scss/variables";
-
 .blog-list {
   display: inline-block;
   padding-left: 15px;

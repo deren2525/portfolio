@@ -1,103 +1,91 @@
-import { Configuration } from "@nuxt/types";
-
-// Load .env
-import DotEnv from "dotenv";
-DotEnv.config();
-
-// Validate this.$environments
-import { validate } from "./plugins/environments";
-validate();
+import { Configuration } from '@nuxt/types';
 
 const nuxtConfig: Configuration = {
-  mode: "spa",
-  /*
-   ** Headers of the page
-   */
+  // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
+  ssr: false,
+
+  // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    htmlAttrs: {
-      prefix: "og: http://ogp.me/ns#"
-    },
-    title: "DEREN's Portfolio",
+    title: 'DEREN\'s Portfolio',
     meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { hid: 'description', name: 'description', content: 'DERENのPortfolio🐶' },
+      { hid: 'og:url', property: 'og:url', content: 'https://derennoportfolio.web.app/' },
+      { hid: 'og:title', property: 'og:title', content: 'DEREN\'s Portfolio' },
       {
-        hid: "description",
-        name: "description",
-        content: "DERENのPortfolio🐶"
-      },
-      { hid: "og:type", property: "og:type", content: "website" },
-      {
-        hid: "og:url",
-        property: "og:url",
-        content: "https://derennoportfolio.web.app/"
-      },
-      { hid: "og:title", property: "og:title", content: "DEREN's Portfolio" },
-      {
-        hid: "og:description",
-        property: "og:description",
-        content: "DERENのPortfolio🐶"
+        hid: 'og:description',
+        property: 'og:description',
+        content: 'DERENのPortfolio🐶'
       },
       {
-        hid: "og:image",
-        property: "og:image",
-        content: "/favicon.ico"
-      },
-      { property: "article:publisher", content: "FacebookURL" },
-      { property: "fb:app_id", content: "FacebookAppID" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Twitter" }
+        hid: 'og:image',
+        property: 'og:image',
+        content: '/favicon.ico'
+      }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ]
   },
-  /*
-   ** Customize the progress-bar color
-   */
-  loading: { color: "#fff" },
-  /*
-   ** Global CSS
-   */
-  css: ["normalize.css"],
-  /*
-   ** Plugins to load before mounting the App
-   */
-  plugins: ["~/plugins/environments.ts"],
-  /*
-   ** Nuxt.js dev-modules
-   */
-  buildModules: [
-    // Typescript support
-    "@nuxt/typescript-build",
-    // Doc: https://github.com/nuxt-community/eslint-module
-    "@nuxtjs/eslint-module",
-    // Doc: https://github.com/nuxt-community/stylelint-module
-    "@nuxtjs/stylelint-module"
+
+  // Global CSS (https://go.nuxtjs.dev/config-css)
+  css: [
+    'normalize.css',
+    '~/assets/scss/base.scss'
   ],
-  /*
-   ** Nuxt.js modules
-   */
-  modules: ["@nuxtjs/dotenv", "@nuxtjs/axios"],
-  /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  axios: {},
-  /*
-   ** Build configuration
-   */
+
+  styleResources: {
+    scss: ['~/assets/scss/variables.scss']
+    // less: [],
+    // stylus: []
+  },
+
+  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
+  plugins: [
+    '~/plugins/environments.ts',
+    '~/plugins/axios/axios-interceptor.ts'
+  ],
+
+  // Auto import components (https://go.nuxtjs.dev/config-components)
+  components: true,
+
+  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
+  buildModules: [
+    // https://go.nuxtjs.dev/typescript
+    '@nuxt/typescript-build',
+    '@nuxtjs/style-resources',
+    'nuxt-typed-vuex'
+  ],
+
+  // Modules (https://go.nuxtjs.dev/config-modules)
+  modules: [
+    '@nuxtjs/dotenv',
+    '@nuxtjs/axios'
+  ],
+
+  // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     /*
-     ** You can extend webpack config here
-     */
-    extend(config, ctx) {}
+    ** You can extend webpack config here
+    */
+    extend (config: any) {
+      config.node = {
+        fs: 'empty'
+      };
+    },
+    transpile: [
+      /typed-vuex/
+    ]
   },
+
   /*
-   ** Typescript options
-   */
+  ** Typescript options
+  */
   typescript: {
     typeCheck: true,
     ignoreNotFoundWarnings: true
   }
 };
 
-module.exports = nuxtConfig;
+export default nuxtConfig;

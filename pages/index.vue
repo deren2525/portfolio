@@ -1,35 +1,41 @@
 <template>
   <div class="container">
-    <div class="profile-overlay" v-show="showProfile" @click="styleScroll(showProfile)" />
+    <div v-show="showProfile" class="profile-overlay" @click="styleScroll(showProfile)" />
     <MenuIcon @click="styleScroll(showProfile)" />
     <div class="works">
       <div class="content">
         <h1>DEREN's Works</h1>
         <section class="section">
           <h2>Art - CodePen -</h2>
-          <WorkList :workItems="codePenWorkItems" />
+          <WorkList :work-items="codePenWorkItems" />
         </section>
         <section class="section">
           <h2>Design</h2>
-          <WorkList :workItems="designWorkItems" />
+          <WorkList :work-items="designWorkItems" />
         </section>
       </div>
       <div class="footer">
-        <SnsListContent :snsList="snsList" />
-        <p class="copyright">Copyright &copy; 2020 DEREN</p>
+        <SnsListContent :sns-list="snsList" />
+        <p class="copyright">
+          Copyright &copy; 2020 DEREN
+        </p>
       </div>
     </div>
 
-    <div class="profile" :class="{ active: showProfile }">
+    <div :class="{ active: showProfile }" class="profile">
       <div class="profile__content">
         <h1>Profile</h1>
         <section class="section section--profile">
           <div class="profile-content">
-            <h2 class="name">DEREN</h2>
-            <p class="text">フロントエンドのお仕事をしてる</p>
+            <h2 class="name">
+              DEREN
+            </h2>
+            <p class="text">
+              フロントエンドのお仕事をしてる
+            </p>
           </div>
           <p class="profile-img">
-            <img src="~/assets/img/profile.png" alt="deren" draggable="false" />
+            <img src="~/assets/img/profile.png" alt="deren" draggable="false">
           </p>
         </section>
         <section class="section section--skill">
@@ -54,7 +60,9 @@
             </div>
           </div>
           <section class="section section--work" @click="showProfile = false">
-            <h2 class="title">Works</h2>
+            <h2 class="title">
+              Works
+            </h2>
             <p>>>></p>
           </section>
         </section>
@@ -62,7 +70,7 @@
           <h2 class="qiita-img">
             Blog
             <p>
-              <img src="~/assets/img/logo/logo-qiita.svg" alt="logo-qiita" draggable="false" />
+              <img src="~/assets/img/logo/logo-qiita.svg" alt="logo-qiita" draggable="false">
             </p>
           </h2>
           <BlogListContent :contribution="1246" :date="[2020, 7, 6]" :article-list="blogItems" />
@@ -73,31 +81,24 @@
         </section>
       </div>
       <div class="footer">
-        <SnsListContent :snsList="snsList" />
-        <p class="copyright">Copyright &copy; 2020 DEREN</p>
+        <SnsListContent :sns-list="snsList" />
+        <p class="copyright">
+          Copyright &copy; 2020 DEREN
+        </p>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import axios from "axios";
-import { Component, Vue } from "vue-property-decorator";
-import { Context } from "@nuxt/types";
+import Vue from 'vue';
 
-import MenuIcon from "~/components/MenuIcon.vue";
-import WorkList from "~/components/WorkList.vue";
-import BlogListContent from "~/components/BlogListContent.vue";
-import SnsListContent from "~/components/SnsListContent.vue";
-import ActivitiesListContent from "~/components/ActivitiesListContent.vue";
+import codePenData from '~/assets/data/codePen.json';
+import designData from '~/assets/data/design.json';
+import activitiesData from '~/assets/data/activities.json';
+import snsData from '~/assets/data/sns.json';
 
-import codePenData from "~/assets/data/codePen.json";
-import designData from "~/assets/data/design.json";
-import activitiesData from "~/assets/data/activities.json";
-import snsData from "~/assets/data/sns.json";
-
-// qiita api URL
-const BASE_URL = "https://qiita.com/api/v2/";
+import qiitaApi from '~/repository/qiita';
 
 export interface IActivitiesList {
   title: string;
@@ -115,58 +116,39 @@ export interface IWorkList {
   url: string;
 }
 
-@Component({
-  components: {
-    MenuIcon,
-    WorkList,
-    BlogListContent,
-    SnsListContent,
-    ActivitiesListContent
+export default Vue.extend({
+
+  async asyncData () {
+    const blogItems = await qiitaApi
+      .getQiitaBlog()
+      .catch(error => console.error(error));
+    return { blogItems };
   },
-  head: {
-    bodyAttrs: {
-      class: "body-class"
+  data () {
+    return {
+      blogItems: [],
+      showProfile: false,
+      codePenWorkItems: codePenData,
+      designWorkItems: designData,
+      activitiesList: activitiesData,
+      snsList: snsData
+    };
+  },
+
+  methods: {
+    styleScroll (showProfile: boolean) {
+      if (showProfile) {
+        document.body.style.overflow = 'auto';
+      } else {
+        document.body.style.overflow = 'hidden';
+      }
+      return (this.showProfile = !this.showProfile);
     }
   }
-})
-export default class index extends Vue {
-  blogItems: any = [];
-  showProfile: boolean = false;
-  codePenWorkItems: IWorkList[] = codePenData;
-  designWorkItems: IWorkList[] = designData;
-  activitiesList: IActivitiesList[] = activitiesData;
-  snsList: ISnsList[] = snsData;
-
-  styleScroll(showProfile: boolean) {
-    if (showProfile) {
-      document.body.style.overflow = "auto";
-    } else {
-      document.body.style.overflow = "hidden";
-    }
-    return (this.showProfile = !this.showProfile);
-  }
-
-  getApi(token: any) {
-    axios
-      .get(BASE_URL + "authenticated_user/items", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        params: {
-          page: 1,
-          per_page: 5
-        }
-      })
-      .then(response => (this.blogItems = response.data));
-  }
-  created() {
-    this.getApi(process.env.QIITA_TOKEN);
-  }
-}
+});
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/variables";
 
 body {
   &.isScroll {

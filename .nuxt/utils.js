@@ -21,6 +21,23 @@ export function interopDefault (promise) {
   return promise.then(m => m.default || m)
 }
 
+export function hasFetch(vm) {
+  return vm.$options && typeof vm.$options.fetch === 'function' && !vm.$options.fetch.length
+}
+export function getChildrenComponentInstancesUsingFetch(vm, instances = []) {
+  const children = vm.$children || []
+  for (const child of children) {
+    if (child.$fetch) {
+      instances.push(child)
+      continue; // Don't get the children since it will reload the template
+    }
+    if (child.$children) {
+      getChildrenComponentInstancesUsingFetch(child, instances)
+    }
+  }
+  return instances
+}
+
 export function applyAsyncData (Component, asyncData) {
   if (
     // For SSR, we once all this function without second param to just apply asyncData
@@ -60,7 +77,7 @@ export function sanitizeComponent (Component) {
     Component._Ctor = Component
     Component.extendOptions = Component.options
   }
-  // For debugging purpose
+  // If no component name defined, set file path as name, (also fixes #5703)
   if (!Component.options.name && Component.options.__file) {
     Component.options.name = Component.options.__file
   }
@@ -126,20 +143,20 @@ export async function setContext (app, context) {
   if (!app.context) {
     app.context = {
       isStatic: process.static,
-      isDev: false,
+      isDev: true,
       isHMR: false,
       app,
       store: app.store,
       payload: context.payload,
       error: context.error,
       base: '/',
-      env: {"QIITA_TOKEN":"92cc6f3c0ef6163b42ebf2f5315a91ea9079d194"}
+      env: {"QIITA_TOKEN":"324ae17b41f941410e4988bead3df53b2f9dc44f"}
     }
     // Only set once
-    if (context.req) {
+    if (!process.static && context.req) {
       app.context.req = context.req
     }
-    if (context.res) {
+    if (!process.static && context.res) {
       app.context.res = context.res
     }
     if (context.ssrContext) {
@@ -210,7 +227,7 @@ export async function setContext (app, context) {
   app.context.next = context.next
   app.context._redirected = false
   app.context._errored = false
-  app.context.isHMR = false
+  app.context.isHMR = Boolean(context.isHMR)
   app.context.params = app.context.route.params || {}
   app.context.query = app.context.route.query || {}
 }
@@ -228,6 +245,9 @@ export function middlewareSeries (promises, appContext) {
 export function promisify (fn, context) {
   let promise
   if (fn.length === 2) {
+      console.warn('Callback-based asyncData, fetch or middleware calls are deprecated. ' +
+        'Please switch to promises or async/await syntax')
+
     // fn(context, callback)
     promise = new Promise((resolve) => {
       fn(context, function (err, data) {
@@ -254,7 +274,8 @@ export function getLocation (base, mode) {
   if (mode === 'hash') {
     return window.location.hash.replace(/^#\//, '')
   }
-  if (base && path.indexOf(base) === 0) {
+  // To get matched with sanitized router.base add trailing slash
+  if (base && (path.endsWith('/') ? path : path + '/').startsWith(base)) {
     path = path.slice(base.length)
   }
   return (path || '/') + window.location.search + window.location.hash
@@ -270,7 +291,7 @@ export function getLocation (base, mode) {
  * @return {!function(Object=, Object=)}
  */
 export function compile (str, options) {
-  return tokensToFunction(parse(str, options))
+  return tokensToFunction(parse(str, options), options)
 }
 
 export function getQueryDiff (toQuery, fromQuery) {
@@ -439,14 +460,14 @@ function escapeGroup (group) {
 /**
  * Expose a method for transforming tokens into the path function.
  */
-function tokensToFunction (tokens) {
+function tokensToFunction (tokens, options) {
   // Compile all the tokens into regexps.
   const matches = new Array(tokens.length)
 
   // Compile all the patterns before compilation.
   for (let i = 0; i < tokens.length; i++) {
     if (typeof tokens[i] === 'object') {
-      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$')
+      matches[i] = new RegExp('^(?:' + tokens[i].pattern + ')$', flags(options))
     }
   }
 
@@ -521,6 +542,16 @@ function tokensToFunction (tokens) {
 }
 
 /**
+ * Get the flags for a regexp from the options.
+ *
+ * @param  {Object} options
+ * @return {string}
+ */
+function flags (options) {
+  return options && options.sensitive ? '' : 'i'
+}
+
+/**
  * Format given url, append query to url query string
  *
  * @param  {string} url
@@ -540,7 +571,11 @@ function formatUrl (url, query) {
   let parts = url.split('/')
   let result = (protocol ? protocol + '://' : '//') + parts.shift()
 
-  let path = parts.filter(Boolean).join('/')
+  let path = parts.join('/')
+  if (path === '' && parts.length === 1) {
+    result += '/'
+  }
+
   let hash
   parts = path.split('#')
   if (parts.length === 2) {
@@ -574,4 +609,29 @@ function formatQuery (query) {
     }
     return key + '=' + val
   }).filter(Boolean).join('&')
+}
+
+export function addLifecycleHook(vm, hook, fn) {
+  if (!vm.$options[hook]) {
+    vm.$options[hook] = []
+  }
+  if (!vm.$options[hook].includes(fn)) {
+    vm.$options[hook].push(fn)
+  }
+}
+
+export function urlJoin () {
+  return [].slice
+    .call(arguments)
+    .join('/')
+    .replace(/\/+/g, '/')
+    .replace(':/', '://')
+}
+
+export function stripTrailingSlash (path) {
+  return path.replace(/\/+$/, '') || '/'
+}
+
+export function isSamePath (p1, p2) {
+  return stripTrailingSlash(p1) === stripTrailingSlash(p2)
 }

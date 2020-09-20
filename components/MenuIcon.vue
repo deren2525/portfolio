@@ -1,17 +1,23 @@
 <template>
-  <div class="menu-icon" @click="$emit('click')">D</div>
+  <div class="menu-icon" @click="click()">
+    D
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import Vue from 'vue';
 
-@Component
-export default class MenuIcon extends Vue {}
+export default Vue.extend({
+  methods: {
+    click () {
+      this.$emit('click');
+    }
+  }
+
+});
 </script>
 
 <style lang="scss" scoped>
-@import "~/assets/scss/variables";
-
 .menu-icon {
   position: fixed;
   top: 0;
