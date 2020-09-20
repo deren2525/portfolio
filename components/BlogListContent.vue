@@ -5,17 +5,19 @@
         date[2]
       }}現在)
     </p>
-    <div v-for="(article, index) in articleList" :key="index">
-      <ul class="blog-list">
-        <li class="blog-list__item">
-          <a :href="article.url" target="_blank">{{ article.title }}</a>
-        </li>
-      </ul>
-    </div>
-    <p class="blog-other">
-      >>>
-      <a href="https://qiita.com/deren2525" target="_blank">記事一覧</a>
-    </p>
+    <template v-if="articleList.length !== 0">
+      <div v-for="(article, index) in articleList" :key="index">
+        <ul class="blog-list">
+          <li class="blog-list__item">
+            <a :href="article.url" target="_blank">{{ article.title }}</a>
+          </li>
+        </ul>
+      </div>
+      <p class="blog-other">
+        >>>
+        <a href="https://qiita.com/deren2525" target="_blank">記事一覧</a>
+      </p>
+    </template>
   </div>
 </template>
 

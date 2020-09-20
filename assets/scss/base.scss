@@ -9,16 +9,85 @@ html, body, #__nuxt, #__layout, .default  {
 }
 
 html {
+  height: 100%;
   font-size: 62.5%;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
+  height: 100%;
   font-family: "Montserrat", "M PLUS 1p", "Noto Sans JP", "Roboto", sans-serif;
+  background: $COLOR_MAIN;
   @include text(small, regular);
 }
 
-*,
-*::before,
-*::after {
+* {
   box-sizing: border-box;
+  &:hover {
+    transition: 0.8s;
+  }
+  &::before,
+  &::after {
+    content: "";
+  }
+}
+
+h1,
+h2 {
+  margin: 0;
+  line-height: 6rem;
+  @include text(large, bold);
+}
+p {
+  @include text(small, regular);
+}
+
+a {
+  text-decoration: none;
+  &:focus,
+  &:link,
+  &:active,
+  &:visited {
+    color: $COLOR_BLACK;
+  }
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.pc-only {
+  display: block;
+}
+
+.sp-only {
+  display: none;
+}
+
+@media screen and (max-width: $BREAKPOINT_SP) {
+  h2 {
+    @include text(normal, bold);
+  }
+
+  p {
+    line-height: 2rem;
+  }
+
+  img {
+    border: 1px solid #363636;
+    box-sizing: border-box;
+  }
+
+  .pc-only {
+    display: none;
+  }
+
+  .sp-only {
+    display: block;
+  }
 }

@@ -5,64 +5,6 @@
 </template>
 
 <style lang="scss">
-@import "~/assets/scss/variables";
-
-html,
-body {
-  height: 100%;
-}
-
-html {
-  font-family: sans-serif;
-  font-size: 62.5%;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
-
-body {
-  background: $COLOR_MAIN;
-}
-
-* {
-  &:hover {
-    transition: 0.8s;
-  }
-  &::before,
-  &::after {
-    content: "";
-  }
-}
-
-h1,
-h2 {
-  margin: 0;
-  line-height: 6rem;
-
-  @include text(large, bold);
-}
-p {
-  @include text(small, regular);
-}
-
-a {
-  text-decoration: none;
-  &:focus,
-  &:link,
-  &:active,
-  &:visited {
-    color: $COLOR_BLACK;
-  }
-}
-
-img {
-  width: 100%;
-  height: 100%;
-}
-
 .footer {
   height: 280px;
   margin-left: 120px;
@@ -71,23 +13,7 @@ img {
   color: $COLOR_WHITE;
 }
 
-.pc-only {
-  display: block;
-}
-
-.sp-only {
-  display: none;
-}
-
 @media screen and (max-width: $BREAKPOINT_SP) {
-  h2 {
-    @include text(normal, bold);
-  }
-
-  p {
-    line-height: 2rem;
-  }
-
   .footer {
     align-items: center;
     background: $COLOR_BLACK;
@@ -101,19 +27,6 @@ img {
       padding-bottom: 30px;
       margin: 0 0 0 30px;
     }
-  }
-
-  img {
-    border: 1px solid #363636;
-    box-sizing: border-box;
-  }
-
-  .pc-only {
-    display: none;
-  }
-
-  .sp-only {
-    display: block;
   }
 }
 </style>

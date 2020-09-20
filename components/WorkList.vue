@@ -1,24 +1,26 @@
 <template>
   <ul class="work-list">
-    <li v-for="(item, index) in workItems" :key="index" class="work-list__list">
-      <a :href="item.url" target="_blank">
-        <div class="work-list__item">
-          <div class="overlay">
-            <p class="work-list__title pc-only">{{ item.title }}</p>
+    <template v-if="workItems.length !== 0">
+      <li v-for="(item, index) in workItems" :key="index" class="work-list__list">
+        <a :href="item.url" target="_blank">
+          <div class="work-list__item">
+            <div class="overlay">
+              <p class="work-list__title pc-only">{{ item.title }}</p>
+            </div>
+            <p class="work-list__img">
+              <img
+                :src="require(`~/assets/img/works/${item.img}`)"
+                :alt="item.title"
+                draggable="false"
+              >
+            </p>
           </div>
-          <p class="work-list__img">
-            <img
-              :src="require(`~/assets/img/works/${item.img}`)"
-              :alt="item.title"
-              draggable="false"
-            >
-          </p>
-        </div>
-      </a>
-      <p class="work-list__title sp-only">
-        ▲ {{ item.title }}
-      </p>
-    </li>
+        </a>
+        <p class="work-list__title sp-only">
+          ▲ {{ item.title }}
+        </p>
+      </li>
+    </template>
   </ul>
 </template>
 

@@ -1,19 +1,21 @@
 <template>
   <div class="sns-list">
-    <div v-for="(sns, index) in snsList" :key="index" class="sns-list__item">
-      <p class="sns-list__icon">
-        <a :href="sns.url" target="_blank">
-          <img
-            :src="require(`~/assets/img/icon/${sns.img}`)"
-            draggable="false"
-            :alt="sns.name"
-          >
-        </a>
-      </p>
-      <div class="tooltip">
-        {{ sns.name }}
+    <template v-if="snsList.length !== 0">
+      <div v-for="(sns, index) in snsList" :key="index" class="sns-list__item">
+        <p class="sns-list__icon">
+          <a :href="sns.url" target="_blank">
+            <img
+              :src="require(`~/assets/img/icon/${sns.img}`)"
+              draggable="false"
+              :alt="sns.name"
+            >
+          </a>
+        </p>
+        <div class="tooltip">
+          {{ sns.name }}
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 

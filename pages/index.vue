@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div v-show="showProfile" class="profile-overlay" @click="styleScroll(showProfile)" />
-    <MenuIcon @click="styleScroll(showProfile)" />
+    <div v-show="shownProfile" class="profile-overlay" @click="styleOfScroll(shownProfile)" />
+    <MenuIcon @click="styleOfScroll(shownProfile)" />
     <div class="works">
       <div class="content">
         <h1>DEREN's Works</h1>
@@ -22,7 +22,7 @@
       </div>
     </div>
 
-    <div :class="{ active: showProfile }" class="profile">
+    <div :class="{ active: shownProfile }" class="profile">
       <div class="profile__content">
         <h1>Profile</h1>
         <section class="section section--profile">
@@ -59,7 +59,7 @@
               <p>Processing.js</p>
             </div>
           </div>
-          <section class="section section--work" @click="showProfile = false">
+          <section class="section section--work" @click="shownProfile = false">
             <h2 class="title">
               Works
             </h2>
@@ -117,17 +117,17 @@ export interface IWorkList {
 }
 
 export default Vue.extend({
-
   async asyncData () {
     const blogItems = await qiitaApi
       .getQiitaBlog()
       .catch(error => console.error(error));
     return { blogItems };
   },
+
   data () {
     return {
       blogItems: [],
-      showProfile: false,
+      shownProfile: false,
       codePenWorkItems: codePenData,
       designWorkItems: designData,
       activitiesList: activitiesData,
@@ -136,20 +136,19 @@ export default Vue.extend({
   },
 
   methods: {
-    styleScroll (showProfile: boolean) {
-      if (showProfile) {
+    styleOfScroll (shownProfile: boolean): boolean {
+      if (shownProfile) {
         document.body.style.overflow = 'auto';
       } else {
         document.body.style.overflow = 'hidden';
       }
-      return (this.showProfile = !this.showProfile);
+      return (this.shownProfile = !this.shownProfile);
     }
   }
 });
 </script>
 
 <style lang="scss">
-
 body {
   &.isScroll {
     overflow: hidden;

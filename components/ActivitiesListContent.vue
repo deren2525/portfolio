@@ -1,12 +1,14 @@
 <template>
   <div class="activities-list-content">
     <ul class="activities-list">
-      <li v-for="(activity, index) in activitiesList" :key="index" class="activities-list__item">
-        <a :href="activity.url" target="_blank">
-          <p class="activities-list__title">{{ activity.title }}</p>
-          <p class="activities-list__link">>>>> {{ activity.urlTitle }}</p>
-        </a>
-      </li>
+      <template v-if="activitiesList.length !== 0">
+        <li v-for="(activity, index) in activitiesList" :key="index" class="activities-list__item">
+          <a :href="activity.url" target="_blank">
+            <p class="activities-list__title">{{ activity.title }}</p>
+            <p class="activities-list__link">>>>> {{ activity.urlTitle }}</p>
+          </a>
+        </li>
+      </template>
     </ul>
   </div>
 </template>
