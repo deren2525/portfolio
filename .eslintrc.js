@@ -56,7 +56,8 @@ module.exports = {
     // キーワードの前後には適切なスペースを
     'keyword-spacing': 2,
     // functionを使用した記法を許可する
-    'object-shorthand': [0, 'methods']
+    'object-shorthand': [0, 'methods'],
+    'no-tabs': 0
   },
   plugins: [
     'vue',

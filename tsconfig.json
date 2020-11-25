@@ -1,26 +1,42 @@
-// tsconfig.json
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2019",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": ["esnext", "esnext.asynciterable", "dom"],
+    "lib": [
+      "esnext",
+      "esnext.asynciterable",
+      "dom"
+    ],
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
     "noEmit": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"],
-      "@/*": ["./*"]
+      "~/*": [
+        "./*"
+      ],
+      "@/*": [
+        "./*"
+      ]
     },
-    "types": ["@types/node", "@nuxt/types", "@nuxtjs/axios"],
-    // https://qiita.com/ysKuga/items/e3a2a7c39ff1bd9f47b2
-    "noImplicitThis": true,
-    // https://github.com/championswimmer/vuex-module-decorators#typescript
-    "experimentalDecorators": true,
-    "resolveJsonModule": true
+    "types": [
+      "@types/node",
+      "@nuxt/types",
+      "jest",
+    ],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/@nuxt/vue-app/types"
+    ]
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    ".nuxt",
+    "dist"
+  ]
 }

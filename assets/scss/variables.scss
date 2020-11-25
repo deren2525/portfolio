@@ -1,3 +1,5 @@
+@import './color.scss';
+
 // text styles
 $text-sizes: (
   large: 2.4rem,
@@ -16,11 +18,11 @@ $text-weights: (
   font-weight: map-get($text-weights, $thickness);
 }
 
-$COLOR_MAIN: #5584a6;
-$COLOR_BLACK: #1a1919;
-$COLOR_WHITE: #fff;
-$COLOR_LINK_BD: #d1d1d1;
-$COLOR_LINK_BD_ACTIVE: #1a1919;
+$COLOR_MAIN: var(--color-main);
+$COLOR_BLACK: var(--color-black);
+$COLOR_WHITE: var(--color-white);
+$COLOR_LINK_BD: var(--color-link-bd);
+$COLOR_LINK_BD_ACTIVE: var(--color-link-bd-active);
 
 // z-index
 $PROFILE_CONTENT_OVERLAY: 5;

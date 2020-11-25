@@ -4,6 +4,10 @@
     <MenuIcon @click="styleOfScroll(shownProfile)" />
     <div class="works">
       <div class="content">
+        <div class="theme-color">
+          <span class="theme-color__item" @click="clickTheme('DARK')"/>
+          <span class="theme-color__item" @click="clickTheme('LIGHT')"/>
+        </div>
         <h1>DEREN's Works</h1>
         <section class="section">
           <h2>Art - CodePen -</h2>
@@ -93,46 +97,48 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import codePenData from '~/assets/data/codePen.json';
-import designData from '~/assets/data/design.json';
-import activitiesData from '~/assets/data/activities.json';
-import snsData from '~/assets/data/sns.json';
+import { IBlog } from '~/types/blog';
+import { IWork } from '~/types/work';
+import { IActivity } from '~/types/activity';
+import { ISns } from '~/types/sns';
 
 import qiitaApi from '~/repository/qiita';
 
-export interface IActivitiesList {
-  title: string;
-  url: string;
-  urlTitle: string;
-}
-export interface ISnsList {
-  name: string;
-  url: string;
-  img: string;
-}
-export interface IWorkList {
-  title: string;
-  img: string;
-  url: string;
+type Data = {
+  blogItems: IBlog[];
+  codePenWorkItems: IWork[];
+  designWorkItems: IWork[];
+  activitiesList: IActivity[];
+  snsList: ISns[];
+  shownProfile: boolean;
+  themeColor: string;
 }
 
 export default Vue.extend({
   async asyncData () {
     const blogItems = await qiitaApi
       .getQiitaBlog()
-      .catch(error => console.error(error));
+      .catch(error =>  {
+        console.error(error)
+        return []
+      });
     return { blogItems };
   },
 
-  data () {
+  data (): Data {
     return {
       blogItems: [],
+      codePenWorkItems: require('~/assets/data/codePen'),
+      designWorkItems: require('~/assets/data/design'),
+      activitiesList: require('~/assets/data/activities'),
+      snsList: require('~/assets/data/sns'),
       shownProfile: false,
-      codePenWorkItems: codePenData,
-      designWorkItems: designData,
-      activitiesList: activitiesData,
-      snsList: snsData
+      themeColor: 'LIGHT'
     };
+  },
+
+  mounted() {
+    document.documentElement.setAttribute('theme', this.themeColor);
   },
 
   methods: {
@@ -143,6 +149,11 @@ export default Vue.extend({
         document.body.style.overflow = 'hidden';
       }
       return (this.shownProfile = !this.shownProfile);
+    },
+    clickTheme(theme: string) {
+      this.themeColor = theme;
+      document.documentElement.setAttribute('theme', this.themeColor);
+
     }
   }
 });
@@ -167,6 +178,22 @@ h3 {
   padding: 120px 0 30px;
   background: $COLOR_WHITE;
   margin-left: 120px;
+}
+
+.theme-color {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0 30px;
+  &__item {
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: #000;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-right: 10px;
+  }
 }
 
 .section {
