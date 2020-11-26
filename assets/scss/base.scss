@@ -21,7 +21,7 @@ html {
 body {
   height: 100%;
   font-family: "Montserrat", "M PLUS 1p", "Noto Sans JP", "Roboto", sans-serif;
-  background: $COLOR_MAIN;
+  background: $COLOR_ACCENT;
   @include text(small, regular);
 }
 
@@ -41,9 +41,14 @@ h2 {
   margin: 0;
   line-height: 6rem;
   @include text(large, bold);
+  color: $COLOR_TEXT;
+}
+h3 {
+  color: $COLOR_TEXT;
 }
 p {
   @include text(small, regular);
+  color: $COLOR_TEXT;
 }
 
 a {
@@ -52,7 +57,7 @@ a {
   &:link,
   &:active,
   &:visited {
-    color: $COLOR_BLACK;
+    color: $COLOR_TEXT;
   }
 }
 
@@ -79,7 +84,7 @@ img {
   }
 
   img {
-    border: 1px solid #363636;
+    border: 1px solid $COLOR_TEXT;
     box-sizing: border-box;
   }
 

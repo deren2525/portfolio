@@ -5,8 +5,8 @@
     <div class="works">
       <div class="content">
         <div class="theme-color">
-          <span class="theme-color__item" @click="clickTheme('DARK')"/>
-          <span class="theme-color__item" @click="clickTheme('LIGHT')"/>
+          <span class="theme-color__item" @click="clickTheme('DARK')" />
+          <span class="theme-color__item" @click="clickTheme('LIGHT')" />
         </div>
         <h1>DEREN's Works</h1>
         <section class="section">
@@ -118,9 +118,9 @@ export default Vue.extend({
   async asyncData () {
     const blogItems = await qiitaApi
       .getQiitaBlog()
-      .catch(error =>  {
-        console.error(error)
-        return []
+      .catch((error) => {
+        console.error(error);
+        return [];
       });
     return { blogItems };
   },
@@ -137,7 +137,7 @@ export default Vue.extend({
     };
   },
 
-  mounted() {
+  mounted () {
     document.documentElement.setAttribute('theme', this.themeColor);
   },
 
@@ -150,10 +150,9 @@ export default Vue.extend({
       }
       return (this.shownProfile = !this.shownProfile);
     },
-    clickTheme(theme: string) {
+    clickTheme (theme: string) {
       this.themeColor = theme;
       document.documentElement.setAttribute('theme', this.themeColor);
-
     }
   }
 });
@@ -176,7 +175,7 @@ h3 {
 
 .content {
   padding: 120px 0 30px;
-  background: $COLOR_WHITE;
+  background: $COLOR_CONTAINER;
   margin-left: 120px;
 }
 
@@ -189,7 +188,7 @@ h3 {
     display: block;
     width: 30px;
     height: 30px;
-    background: #000;
+    background: red;
     border-radius: 50%;
     cursor: pointer;
     margin-right: 10px;
@@ -198,7 +197,7 @@ h3 {
 
 .section {
   padding: 60px 30px 0;
-  background: $COLOR_WHITE;
+  background: $COLOR_CONTAINER;
   &--profile,
   &--skill,
   &--work,
@@ -225,7 +224,7 @@ h3 {
     width: 80%;
     height: 180px;
     background: $COLOR_BLACK;
-    color: $COLOR_WHITE;
+    color: $COLOR_CONTAINER;
     box-sizing: border-box;
     cursor: pointer;
     p {
@@ -267,7 +266,7 @@ h3 {
   left: -80%;
   width: 80%;
   height: 100%;
-  background: $COLOR_MAIN;
+  background: $COLOR_ACCENT;
   transition: 0.8s;
   overflow: scroll;
   z-index: $PROFILE_CONTENT;

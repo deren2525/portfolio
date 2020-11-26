@@ -27,8 +27,8 @@ export default Vue.extend({
   justify-content: center;
   width: 120px;
   height: 120px;
-  background: $COLOR_BLACK;
-  color: $COLOR_WHITE;
+  background: $COLOR_INITIAL_BG;
+  color: $COLOR_INITIAL_TEXT;
   font-size: 4rem;
   font-weight: bold;
   cursor: pointer;

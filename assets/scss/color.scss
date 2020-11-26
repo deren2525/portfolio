@@ -1,15 +1,22 @@
 html[theme='LIGHT'] {
-  --color-main: #5584a6;
+  --color-container: #fff;
+  --color-accent: #5584a6;
   --color-black: #1a1919;
   --color-white: #fff;
+  --color-text: #1a1919;
   --color-link-bd: #d1d1d1;
   --color-link-bd-active: #1a1919;
+  --color-initial-bg: #1a1919;
+  --color-initial-text: #fff;
 }
 
 html[theme='DARK'] {
-  --color-main: #73a655;
+  --color-container: #1a1919;
+  --color-accent: #e77326;
   --color-black: #1a1919;
   --color-white: #fff;
+  --color-text: #fff;
   --color-link-bd: #d1d1d1;
-  --color-link-bd-active: #1a1919;
+  --color-initial-bg: #fff;
+  --color-initial-text: #1a1919;
 }

@@ -18,11 +18,15 @@ $text-weights: (
   font-weight: map-get($text-weights, $thickness);
 }
 
-$COLOR_MAIN: var(--color-main);
+$COLOR_CONTAINER: var(--color-container);
+$COLOR_ACCENT: var(--color-accent);
 $COLOR_BLACK: var(--color-black);
 $COLOR_WHITE: var(--color-white);
+$COLOR_TEXT : var(--color-text);
 $COLOR_LINK_BD: var(--color-link-bd);
 $COLOR_LINK_BD_ACTIVE: var(--color-link-bd-active);
+$COLOR_INITIAL_BG: var(--color-initial-bg);
+$COLOR_INITIAL_TEXT: var(--color-initial-text);
 
 // z-index
 $PROFILE_CONTENT_OVERLAY: 5;
