@@ -23,10 +23,13 @@ $COLOR_ACCENT: var(--color-accent);
 $COLOR_BLACK: var(--color-black);
 $COLOR_WHITE: var(--color-white);
 $COLOR_TEXT : var(--color-text);
+$COLOR_TEXT_WHITE : var(--color-text-white);
 $COLOR_LINK_BD: var(--color-link-bd);
-$COLOR_LINK_BD_ACTIVE: var(--color-link-bd-active);
+$COLOR_LINK_BD_HOVER: var(--color-link-bd-hover);
 $COLOR_INITIAL_BG: var(--color-initial-bg);
 $COLOR_INITIAL_TEXT: var(--color-initial-text);
+$COLOR_OVERLAY: var(--color-overlay);
+$COLOR_OVERLAY_TEXT: var(--color-overlay-text);
 
 // z-index
 $PROFILE_CONTENT_OVERLAY: 5;
@@ -50,7 +53,7 @@ $BREAKPOINT_SP: 768px;
   }
   &::after {
     width: 0;
-    background: $COLOR_LINK_BD_ACTIVE;
+    background: $COLOR_LINK_BD_HOVER;
   }
   &:hover {
     &::after {

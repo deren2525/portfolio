@@ -5,8 +5,8 @@
     <div class="works">
       <div class="content">
         <div class="theme-color">
-          <span class="theme-color__item" @click="clickTheme('DARK')" />
-          <span class="theme-color__item" @click="clickTheme('LIGHT')" />
+          <span class="theme-color__item light" @click="clickTheme('DARK')" />
+          <span class="theme-color__item dark" @click="clickTheme('LIGHT')" />
         </div>
         <h1>DEREN's Works</h1>
         <section class="section">
@@ -133,7 +133,7 @@ export default Vue.extend({
       activitiesList: require('~/assets/data/activities'),
       snsList: require('~/assets/data/sns'),
       shownProfile: false,
-      themeColor: 'LIGHT'
+      themeColor: 'LIGHT',
     };
   },
 
@@ -190,8 +190,16 @@ h3 {
     height: 30px;
     background: red;
     border-radius: 50%;
+    border: 2px solid #ccc;
     cursor: pointer;
     margin-right: 10px;
+    &.light {
+      background: #fff;
+    }
+
+    &.dark {
+      background: #000;
+    }
   }
 }
 
@@ -278,7 +286,7 @@ h3 {
     margin: 60px 0 0 120px;
     h1 {
       padding-top: 60px;
-      background: $COLOR_WHITE;
+      background: $COLOR_CONTAINER;
     }
   }
 }

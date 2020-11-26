@@ -1,7 +1,7 @@
 <template>
   <div class="blog-list-content">
     <p>
-      {{ contribution }}contribution ({{ date[0] }}/{{ date[1] }}/{{
+      {{ totalContribution }}contribution ({{ date[0] }}/{{ date[1] }}/{{
         date[2]
       }}現在)
     </p>
@@ -22,12 +22,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { PropType } from 'vue';
+import { IActivity } from '../types/activity';
 
 export default Vue.extend({
   props: {
     articleList: {
-      type: Array,
+      type: Array as PropType<IActivity[]>,
       required: false,
       default: () => []
     },
@@ -40,6 +41,12 @@ export default Vue.extend({
       type: Array,
       required: false,
       default: () => []
+    }
+  },
+  computed: {
+    totalContribution(): number {
+      if(this.articleList.length !== 0) { return 0 }
+      return 0
     }
   }
 });

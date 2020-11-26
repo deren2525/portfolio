@@ -4,10 +4,13 @@ html[theme='LIGHT'] {
   --color-black: #1a1919;
   --color-white: #fff;
   --color-text: #1a1919;
+  --color-text-white: #1a1919;
   --color-link-bd: #d1d1d1;
-  --color-link-bd-active: #1a1919;
+  --color-link-bd-hover: #1a1919;
   --color-initial-bg: #1a1919;
   --color-initial-text: #fff;
+  --color-overlay: #000;
+  --color-overlay-text: #fff;
 }
 
 html[theme='DARK'] {
@@ -16,7 +19,11 @@ html[theme='DARK'] {
   --color-black: #1a1919;
   --color-white: #fff;
   --color-text: #fff;
+  --color-text-white: #1a1919;
   --color-link-bd: #d1d1d1;
+  --color-link-bd-hover: #1a1919;
   --color-initial-bg: #fff;
   --color-initial-text: #1a1919;
+  --color-overlay: #000;
+  --color-overlay-text: #fff;
 }

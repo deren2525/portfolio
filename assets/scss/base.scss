@@ -27,9 +27,7 @@ body {
 
 * {
   box-sizing: border-box;
-  &:hover {
-    transition: 0.8s;
-  }
+  transition: 0.8s;
   &::before,
   &::after {
     content: "";

@@ -9,10 +9,6 @@ export default {
     const query = {
       headers: {
         Authorization: `Bearer ${environments.QIITA_TOKEN}`
-      },
-      params: {
-        page: 1,
-        per_page: 5
       }
     };
     const res: resGetQiita[] = await axios.$get('https://qiita.com/api/v2/authenticated_user/items', query);
