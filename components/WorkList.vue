@@ -86,6 +86,7 @@ export default Vue.extend({
     &.sp-only {
       line-height: 6rem;
       margin: 0 0 0 15px;
+      color: $COLOR_TEXT;
     }
   }
 
