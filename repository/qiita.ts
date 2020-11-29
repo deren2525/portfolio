@@ -15,9 +15,11 @@ export default {
 
     return res.map((item: resGetQiita) => {
       return {
-        title: item.title,
-        url: item.url
-      }
-    })
+        day: item.created_at || Date(),
+        title: item.title || '',
+        url: item.url || '',
+        likeCount: item.likes_count || 0
+      };
+    });
   }
 };

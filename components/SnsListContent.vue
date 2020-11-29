@@ -43,7 +43,7 @@ $tooltip-width: 100px;
   width: $tooltip-width;
   padding: 12px 10px;
   background: $COLOR_BLACK;
-  color: $COLOR_WHITE;
+  color: $COLOR_TEXT_WHITE;
   text-align: center;
   box-sizing: border-box;
   border-radius: 4px;

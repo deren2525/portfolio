@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-export default Vue.extend({})
+import Vue from 'vue';
+export default Vue.extend({});
 </script>>
 
 <style lang="scss">
@@ -15,14 +15,12 @@ export default Vue.extend({})
   margin-left: 120px;
   padding: 50px 0;
   box-sizing: border-box;
-  color: $COLOR_WHITE;
+  color: $COLOR_TEXT_WHITE;
 }
 
 @media screen and (max-width: $BREAKPOINT_SP) {
   .footer {
     align-items: center;
-    background: $COLOR_BLACK;
-    color: $COLOR_WHITE;
     margin-left: 0;
     padding: 0;
     line-height: 6rem;

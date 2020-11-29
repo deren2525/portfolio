@@ -46,9 +46,8 @@ export default Vue.extend({
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba($COLOR_BLACK, 0.8);
+  background: $COLOR_OVERLAY;
   transition: 0.8s;
-  color: $COLOR_WHITE;
   overflow: hidden;
 }
 
@@ -79,6 +78,8 @@ export default Vue.extend({
   }
 
   &__title {
+    color: $COLOR_OVERLAY_TEXT;
+    @include text(small, bold);
     &.pc-only {
       white-space: nowrap;
     }
@@ -100,6 +101,7 @@ export default Vue.extend({
     width: 100%;
     height: 100%;
     margin: 0;
+    line-height: 0;
   }
 }
 

@@ -39,7 +39,7 @@ export default Vue.extend({
   &__item {
     position: relative;
     margin: 0;
-    color: $COLOR_BLACK;
+    color: $COLOR_LINK;
     @include text(small, regular);
     &::before {
       position: absolute;
@@ -47,7 +47,8 @@ export default Vue.extend({
       left: -15px;
       width: 3px;
       height: 3px;
-      background: $COLOR_BLACK;
+      background: $COLOR_LINK;
+      color: $COLOR_LINK;
       border-radius: 50%;
     }
   }
@@ -57,16 +58,11 @@ export default Vue.extend({
     display: inline-block;
     margin: 0;
     padding-bottom: 5px;
-
     @include link-border;
   }
 }
 
 @media screen and (max-width: $BREAKPOINT_SP) {
-  .activities-list-content {
-    margin-bottom: 60px;
-  }
-
   .activities-list {
     padding: 0 0 60px 30px;
 

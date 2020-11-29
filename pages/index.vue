@@ -5,8 +5,12 @@
     <div class="works">
       <div class="content">
         <div class="theme-color">
-          <span class="theme-color__item light" @click="clickTheme('DARK')" />
-          <span class="theme-color__item dark" @click="clickTheme('LIGHT')" />
+          <span class="theme-color__item" :class="{'theme-color__item--active': themeColor === 'BLUE'}" style="background: #3D425F" @click="clickTheme('BLUE')" />
+          <span class="theme-color__item" :class="{'theme-color__item--active': themeColor === 'LIGHT_BLUE'}" style="background: #7FC2C2" @click="clickTheme('LIGHT_BLUE')" />
+          <span class="theme-color__item" :class="{'theme-color__item--active': themeColor === 'YELLOW'}" style="background: #F8DA5B" @click="clickTheme('YELLOW')" />
+          <span class="theme-color__item" :class="{'theme-color__item--active': themeColor === 'PINK'}" style="background: #F39E7A" @click="clickTheme('PINK')" />
+          <span class="theme-color__item" :class="{'theme-color__item--active': themeColor === 'GREEN'}" style="background: #C8EA7E" @click="clickTheme('GREEN')" />
+          <span class="theme-color__item" :class="{'theme-color__item--active': themeColor === 'DARK'}" style="background: #1a1919" @click="clickTheme('DARK')" />
         </div>
         <h1>DEREN's Works</h1>
         <section class="section">
@@ -71,13 +75,8 @@
           </section>
         </section>
         <section class="section section--blog">
-          <h2 class="qiita-img">
-            Blog
-            <p>
-              <img src="~/assets/img/logo/logo-qiita.svg" alt="logo-qiita" draggable="false">
-            </p>
-          </h2>
-          <BlogListContent :contribution="1246" :date="[2020, 7, 6]" :article-list="blogItems" />
+          <h2>Blog（Qiita）</h2>
+          <BlogListContent :blog-articles="blogArticles" />
         </section>
         <section class="section section--activities">
           <h2>Activities</h2>
@@ -105,7 +104,7 @@ import { ISns } from '~/types/sns';
 import qiitaApi from '~/repository/qiita';
 
 type Data = {
-  blogItems: IBlog[];
+  blogArticles: IBlog[];
   codePenWorkItems: IWork[];
   designWorkItems: IWork[];
   activitiesList: IActivity[];
@@ -116,25 +115,31 @@ type Data = {
 
 export default Vue.extend({
   async asyncData () {
-    const blogItems = await qiitaApi
+    const blogArticles = await qiitaApi
       .getQiitaBlog()
       .catch((error) => {
         console.error(error);
         return [];
       });
-    return { blogItems };
+    return { blogArticles };
   },
 
   data (): Data {
     return {
-      blogItems: [],
+      blogArticles: [],
       codePenWorkItems: require('~/assets/data/codePen'),
       designWorkItems: require('~/assets/data/design'),
       activitiesList: require('~/assets/data/activities'),
       snsList: require('~/assets/data/sns'),
       shownProfile: false,
-      themeColor: 'LIGHT',
+      themeColor: 'BLUE'
     };
+  },
+
+  created () {
+    this.blogArticles.sort((a: IBlog, b: IBlog) => {
+      return b.likeCount - a.likeCount;
+    });
   },
 
   mounted () {
@@ -188,17 +193,13 @@ h3 {
     display: block;
     width: 30px;
     height: 30px;
-    background: red;
-    border-radius: 50%;
-    border: 2px solid #ccc;
+    background: #FFF;
+    border: 2px solid #FFF;
     cursor: pointer;
     margin-right: 10px;
-    &.light {
-      background: #fff;
-    }
-
-    &.dark {
-      background: #000;
+    opacity: 0.6;
+    &--active {
+      opacity: 1;
     }
   }
 }
@@ -216,7 +217,7 @@ h3 {
   }
   &--profile {
     display: flex;
-    border-bottom: 1px solid $COLOR_BLACK;
+    border-bottom: 1px solid $COLOR_TEXT;
   }
   &--skill {
     position: relative;
@@ -231,28 +232,20 @@ h3 {
     align-items: center;
     width: 80%;
     height: 180px;
-    background: $COLOR_BLACK;
-    color: $COLOR_CONTAINER;
+    background: $COLOR_INITIAL_BG;
     box-sizing: border-box;
     cursor: pointer;
     p {
       @include text(regular, bold);
+      color: $COLOR_TEXT_BLACK;
+    }
+    .title {
+      color: $COLOR_TEXT_BLACK;
     }
   }
   &--blog {
-    border-bottom: 1px solid $COLOR_BLACK;
+    border-bottom: 1px solid $COLOR_TEXT;
   }
-}
-
-.overlay {
-  width: 0;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba($COLOR_BLACK, 0.8);
-  transition: 0.8s;
-  color: $COLOR_WHITE;
 }
 
 .profile-overlay {
@@ -261,7 +254,7 @@ h3 {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba($COLOR_BLACK, 0.9);
+  background: $COLOR_OVERLAY;
   cursor: pointer;
   opacity: 1;
   transition: 0.8s;
@@ -316,20 +309,8 @@ h3 {
   }
 }
 
-.qiita-img {
-  display: flex;
-  justify-items: center;
-  align-items: center;
-  width: 100px;
-  p {
-    width: 100px;
-    min-width: 100px;
-    height: 60px;
-    margin: 0 0 0 30px;
-    img {
-      width: 100%;
-    }
-  }
+.copyright {
+  color: $COLOR_TEXT_WHITE;
 }
 
 @media screen and (max-width: $BREAKPOINT_SP) {
@@ -373,6 +354,15 @@ h3 {
     padding: 60px 0 30px;
   }
 
+  .theme-color {
+    padding: 0 10px;
+
+    &__item {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
   .profile {
     width: 85%;
     left: -85%;
@@ -381,7 +371,6 @@ h3 {
       margin: 30px 0 0 15px;
       h1 {
         padding-top: 30px;
-        background: $COLOR_WHITE;
       }
       h2 {
         padding-top: 30px;
@@ -424,13 +413,6 @@ h3 {
           margin-top: 10px;
         }
       }
-    }
-  }
-
-  .qiita-img {
-    img {
-      width: 100%;
-      border: none;
     }
   }
 }

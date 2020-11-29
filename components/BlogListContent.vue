@@ -1,15 +1,13 @@
 <template>
   <div class="blog-list-content">
     <p>
-      {{ totalContribution }}contribution ({{ date[0] }}/{{ date[1] }}/{{
-        date[2]
-      }}現在)
+      {{ totalContribution }}contribution ( {{ today }} 現在)
     </p>
-    <template v-if="articleList.length !== 0">
-      <div v-for="(article, index) in articleList" :key="index">
+    <template v-if="articles.length !== 0">
+      <div v-for="(article, index) in articles" :key="index">
         <ul class="blog-list">
           <li class="blog-list__item">
-            <a :href="article.url" target="_blank">{{ article.title }}</a>
+            <a :href="article.url" target="_blank">{{ article.title }}（{{ article.likeCount }}）</a>
           </li>
         </ul>
       </div>
@@ -23,31 +21,40 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
-import { IActivity } from '../types/activity';
+import moment from 'moment';
+import { IBlog } from '~/types/blog';
 
 export default Vue.extend({
   props: {
-    articleList: {
-      type: Array as PropType<IActivity[]>,
-      required: false,
-      default: () => []
-    },
-    contribution: {
-      type: Number,
-      required: false,
-      default: 0
-    },
-    date: {
-      type: Array,
+    blogArticles: {
+      type: Array as PropType<IBlog[]>,
       required: false,
       default: () => []
     }
   },
+
+  data () {
+    return {
+      articles: [] as IBlog[]
+    };
+  },
+
   computed: {
-    totalContribution(): number {
-      if(this.articleList.length !== 0) { return 0 }
-      return 0
+    totalContribution (): number {
+      if (this.blogArticles.length === 0) { return 0; }
+      let totalContribution = 0;
+      this.blogArticles.forEach((item: IBlog) => {
+        totalContribution += item.likeCount;
+      });
+      return totalContribution;
+    },
+    today (): string {
+      return moment().format('YYYY年MM月DD日');
     }
+  },
+
+  created () {
+    this.articles = this.blogArticles.slice(0, 4);
   }
 });
 </script>
@@ -63,21 +70,18 @@ export default Vue.extend({
     position: relative;
     margin: 0;
     padding-bottom: 5px;
-    color: $COLOR_BLACK;
-    border-bottom: 2px solid $COLOR_LINK_BD;
     box-sizing: border-box;
-    @include link-border;
     &::before {
       position: absolute;
       top: calc(1.6rem / 2);
       left: -15px;
       width: 3px;
       height: 3px;
-      background: $COLOR_BLACK;
       border-radius: 50%;
+      background: $COLOR_LINK;
     }
-    &::after {
-      bottom: -2px;
+    a {
+      @include link-border;
     }
   }
 }
@@ -87,7 +91,6 @@ export default Vue.extend({
   display: inline-block;
   margin: 20px 0 30px 0;
   padding: 0 0 5px 0;
-  color: $COLOR_BLACK;
   @include text(small, regular);
   @include link-border;
 }
