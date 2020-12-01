@@ -67,7 +67,7 @@
               <p>Processing.js</p>
             </div>
           </div>
-          <section class="section section--work" @click="shownProfile = false">
+          <section class="section section--work" @click="styleOfScroll(shownProfile)">
             <h2 class="title">
               Works
             </h2>
@@ -147,13 +147,9 @@ export default Vue.extend({
   },
 
   methods: {
-    styleOfScroll (shownProfile: boolean): boolean {
-      if (shownProfile) {
-        document.body.style.overflow = 'auto';
-      } else {
-        document.body.style.overflow = 'hidden';
-      }
-      return (this.shownProfile = !this.shownProfile);
+    styleOfScroll (shownProfile: boolean) {
+      document.body.style.overflow = shownProfile ? 'auto' : 'hidden';
+      this.shownProfile = !this.shownProfile;
     },
     clickTheme (theme: string) {
       this.themeColor = theme;

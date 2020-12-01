@@ -1,4 +1,4 @@
-html[theme='BLUE'] {
+:root {
   --color-container: #3D425F;
   --color-accent: #4e8d97;
   --color-black: #1a1919;
@@ -15,7 +15,24 @@ html[theme='BLUE'] {
   --color-overlay-text: #BDD3FF;
 }
 
-html[theme='LIGHT_BLUE'] {
+:root[theme='BLUE'] {
+  --color-container: #3D425F;
+  --color-accent: #4e8d97;
+  --color-black: #1a1919;
+  --color-text: #FFF;
+  --color-text-black: #1a1919;
+  --color-text-white: #FFF;
+  --color-link: #FFF;
+  --color-link-hover: #BDD3FF;
+  --color-initial-bg: #FFF;
+  --color-initial-text: #4E8D97;
+  --color-overlay-r: 26;
+  --color-overlay-g: 25;
+  --color-overlay-b: 25;
+  --color-overlay-text: #BDD3FF;
+}
+
+:root[theme='LIGHT_BLUE'] {
   --color-container: #7FC2C2;
   --color-accent: #E1774B;
   --color-black: #324D4D;
@@ -32,7 +49,7 @@ html[theme='LIGHT_BLUE'] {
   --color-overlay-text: #F4DB60;
 }
 
-html[theme='YELLOW'] {
+:root[theme='YELLOW'] {
   --color-container: #F8DA5B;
   --color-accent: #395A94;
   --color-black: #1a1919;
@@ -49,7 +66,7 @@ html[theme='YELLOW'] {
   --color-overlay-text: #DE97A8;
 }
 
-html[theme='GREEN'] {
+:root[theme='GREEN'] {
   --color-container: #C8EA7E;
   --color-accent: #5F519B;
   --color-black: #1a1919;
@@ -66,7 +83,7 @@ html[theme='GREEN'] {
   --color-overlay-text: #C8EA7E;
 }
 
-html[theme='PINK'] {
+:root[theme='PINK'] {
   --color-container: #F39E7A;
   --color-accent: #699240;
   --color-black: #1a1919;
@@ -83,7 +100,7 @@ html[theme='PINK'] {
   --color-overlay-text: #FFF;
 }
 
-html[theme='DARK'] {
+:root[theme='DARK'] {
   --color-container: #1a1919;
   --color-accent:#808080;
   --color-black: #1a1919;
