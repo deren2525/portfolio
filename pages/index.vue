@@ -18,6 +18,10 @@
           <WorkList :work-items="codePenWorkItems" />
         </section>
         <section class="section">
+          <h2>Chrome Extension</h2>
+          <WorkList :work-items="chromeWorkItems" />
+        </section>
+        <section class="section">
           <h2>Design</h2>
           <WorkList :work-items="designWorkItems" />
         </section>
@@ -107,6 +111,7 @@ type Data = {
   blogArticles: IBlog[];
   codePenWorkItems: IWork[];
   designWorkItems: IWork[];
+  chromeWorkItems: IWork[];
   activitiesList: IActivity[];
   snsList: ISns[];
   shownProfile: boolean;
@@ -129,6 +134,7 @@ export default Vue.extend({
       blogArticles: [],
       codePenWorkItems: require('~/assets/data/codePen'),
       designWorkItems: require('~/assets/data/design'),
+      chromeWorkItems: require('~/assets/data/other'),
       activitiesList: require('~/assets/data/activities'),
       snsList: require('~/assets/data/sns'),
       shownProfile: false,
