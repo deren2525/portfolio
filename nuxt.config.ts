@@ -11,24 +11,18 @@ const nuxtConfig: Configuration = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'DERENのPortfolio🐶' },
+      { hid: 'og:type', name: 'og:type', content: 'website' },
       { hid: 'og:url', property: 'og:url', content: 'https://derennoportfolio.web.app/' },
       { hid: 'og:title', property: 'og:title', content: 'DEREN\'s Portfolio' },
-      {
-        hid: 'og:description',
-        property: 'og:description',
-        content: 'DERENのPortfolio🐶'
-      },
-      {
-        hid: 'og:image',
-        property: 'og:image',
-        content: '/favicon.ico'
-      }
+      { hid: 'og:description', property: 'og:description', content: 'DERENのPortfolio🐶' },
+      { hid: 'og:image', property: 'og:image', content: '/favicon.ico' },
+      { hid: 'og:site_name', property: 'og:site_name', content: 'DERENのPortfolio🐶' },
+      { hid: 'language', property: 'language', content: 'Japanese' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     'normalize.css',
