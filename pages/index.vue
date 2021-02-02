@@ -43,7 +43,9 @@
               DEREN
             </h2>
             <p class="text">
-              フロントエンドのお仕事をしてる
+              フロントエンドのお仕事をしてる<br>
+              ノリでCSSでいろいろ作ってるけど<br>
+              普段の業務はNuxt、Typescriptメインで動いています
             </p>
           </div>
           <p class="profile-img">
