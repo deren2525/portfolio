@@ -1,25 +1,24 @@
 <template>
-  <div class="activities-list-content">
-    <ul class="activities-list">
-      <template v-if="activitiesList.length !== 0">
-        <li v-for="(activity, index) in activitiesList" :key="index" class="activities-list__item">
-          <a :href="activity.url" target="_blank">
-            <p class="activities-list__title">{{ activity.title }}</p>
-            <p class="activities-list__link">>>>> {{ activity.urlTitle }}</p>
-          </a>
-        </li>
-      </template>
-    </ul>
-  </div>
+  <ul class="activities-list">
+    <template v-if="items.length !== 0">
+      <li v-for="(activity, index) in items" :key="index" class="activities-list__item">
+        <a :href="activity.url" target="_blank">
+          <p class="activities-list__title">{{ activity.title }}</p>
+          <p class="activities-list__link">>>>> {{ activity.urlTitle }}</p>
+        </a>
+      </li>
+    </template>
+  </ul>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { PropType } from 'vue';
+import { IActivity } from '~/types/activity';
 
 export default Vue.extend({
   props: {
-    activitiesList: {
-      type: Array,
+    items: {
+      type: Array as PropType<IActivity[]>,
       required: false,
       default: () => []
     }

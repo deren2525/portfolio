@@ -1,11 +1,11 @@
 <template>
-  <div class="blog-list-content">
+  <div class="blog-list">
     <p>
       {{ totalContribution }}contribution ( {{ today }} 現在)
     </p>
-    <template v-if="articles.length !== 0">
+    <template v-if="items.length !== 0">
       <div v-for="(article, index) in articles" :key="index">
-        <ul class="blog-list">
+        <ul class="blog-list__list">
           <li class="blog-list__item">
             <a :href="article.url" target="_blank">{{ article.title }}（{{ article.likeCount }}）</a>
           </li>
@@ -21,50 +21,64 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { IBlog } from '~/types/blog';
+
+type Data = {
+  articles: IBlog[];
+}
 
 export default Vue.extend({
   props: {
-    blogArticles: {
+    items: {
       type: Array as PropType<IBlog[]>,
       required: false,
       default: () => []
     }
   },
 
-  data () {
+  data (): Data {
     return {
-      articles: [] as IBlog[]
+      articles: []
     };
   },
-
   computed: {
     totalContribution (): number {
-      if (this.blogArticles.length === 0) { return 0; }
+      if (this.items.length === 0) { return 0; }
       let totalContribution = 0;
-      this.blogArticles.forEach((item: IBlog) => {
+      this.items.forEach((item: IBlog) => {
         totalContribution += item.likeCount;
       });
       return totalContribution;
     },
     today (): string {
-      return moment().format('YYYY年MM月DD日');
+      return dayjs().format('YYYY年MM月DD日');
+    }
+  },
+
+  watch: {
+    items: {
+      handler () {
+        this.articles = this.items.slice(0, 4);
+      },
+      deep: true
     }
   },
 
   created () {
-    this.articles = this.blogArticles.slice(0, 4);
+    this.articles = this.items.slice(0, 4);
   }
 });
 </script>
 
 <style lang="scss" scoped>
 .blog-list {
-  display: inline-block;
-  padding-left: 15px;
-  list-style: none;
-  @include text(small, regular);
+  &__list {
+    display: inline-block;
+    padding-left: 15px;
+    list-style: none;
+    @include text(small, regular);
+  }
 
   &__item {
     position: relative;
@@ -96,25 +110,26 @@ export default Vue.extend({
 }
 
 @media screen and (max-width: $BREAKPOINT_SP) {
-  .blog-list-content {
-    margin-bottom: 30px;
-    p {
-      margin-left: 15px;
-    }
+.blog-list {
+  margin-bottom: 30px;
+  p {
+    margin-left: 15px;
   }
 
-  .blog-list {
+  &__list {
     padding-left: 30px;
     margin: 0 0 10px 0;
     line-height: 2rem;
-    &__item {
-      margin: 0 0 10px 0;
-    }
   }
 
-  .blog-other {
-    padding: 0 0 5px 0;
-    margin: 15px 0 60px 0;
+  &__item {
+    margin: 0 0 10px 0;
   }
+}
+
+.blog-other {
+  padding: 0 0 5px 0;
+  margin: 15px 0 60px 0;
+}
 }
 </style>

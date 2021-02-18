@@ -1,23 +1,23 @@
 <template>
   <ul class="work-list">
-    <template v-if="workItems.length !== 0">
-      <li v-for="(item, index) in workItems" :key="index" class="work-list__list">
+    <template v-if="items.length !== 0">
+      <li v-for="item in items" :key="item.id" class="work-list__list">
         <a :href="item.url" target="_blank">
           <div class="work-list__item">
             <div class="overlay">
-              <p class="work-list__title pc-only">{{ item.title }}</p>
+              <p class="work-list__title pc-only">{{ item.name }}</p>
             </div>
             <p class="work-list__img">
               <img
-                :src="require(`~/assets/img/works/${item.img}`)"
-                :alt="item.title"
+                :src="item.imgSrc"
+                :alt="item.name"
                 draggable="false"
               >
             </p>
           </div>
         </a>
         <p class="work-list__title sp-only">
-          ▲ {{ item.title }}
+          ▲ {{ item.name }}
         </p>
       </li>
     </template>
@@ -25,12 +25,13 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
+import Vue, { PropType } from 'vue';
+import { IWork } from '~/types/work';
 
 export default Vue.extend({
   props: {
-    workItems: {
-      type: Array,
+    items: {
+      type: Array as PropType<IWork[]>,
       required: false,
       default: () => []
     }
