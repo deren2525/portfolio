@@ -39,6 +39,7 @@ const nuxtConfig: Configuration = {
   plugins: [
     '~/plugins/environments.ts',
     '~/plugins/axios/axios-interceptor.ts',
+    '~/plugins/firebase.ts',
     '~/plugins/gtag.js'
   ],
 

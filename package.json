@@ -14,7 +14,8 @@
     "test": "jest"
   },
   "dependencies": {
-    "moment": "^2.29.1",
+    "dayjs": "^1.10.4",
+    "firebase": "^8.2.7",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.14.5"
   },
