@@ -15,19 +15,19 @@
         <h1>DEREN's Works</h1>
         <section class="section">
           <h2>Art - CodePen -</h2>
-          <WorkList :work-items="codePenWorkItems" />
+          <WorkList :items="codePenWorks" />
         </section>
         <section class="section">
           <h2>Chrome Extension</h2>
-          <WorkList :work-items="chromeWorkItems" />
+          <WorkList :items="otherWorks" />
         </section>
         <section class="section">
           <h2>Design</h2>
-          <WorkList :work-items="designWorkItems" />
+          <WorkList :items="designWorks" />
         </section>
       </div>
       <div class="footer">
-        <SnsListContent :sns-list="snsList" />
+        <SnsList />
         <p class="copyright">
           Copyright &copy; 2020 DEREN
         </p>
@@ -72,6 +72,10 @@
               <p>React</p>
               <p>Processing.js</p>
             </div>
+            <div class="skill-set-content__item">
+              <h3>Other</h3>
+              <p>Figma</p>
+            </div>
           </div>
           <section class="section section--work" @click="styleOfScroll(shownProfile)">
             <h2 class="title">
@@ -82,15 +86,15 @@
         </section>
         <section class="section section--blog">
           <h2>Blog（Qiita）</h2>
-          <BlogListContent :blog-articles="blogArticles" />
+          <BlogList :items="qiitaBlogList" />
         </section>
         <section class="section section--activities">
           <h2>Activities</h2>
-          <ActivitiesListContent :activities-list="activitiesList" />
+          <ActivitiesList :items="activities" />
         </section>
       </div>
       <div class="footer">
-        <SnsListContent :sns-list="snsList" />
+        <SnsList />
         <p class="copyright">
           Copyright &copy; 2020 DEREN
         </p>
@@ -109,43 +113,48 @@ import { ISns } from '~/types/sns';
 
 import qiitaApi from '~/repository/qiita';
 
+import firebase from '~/plugins/firebase';
+import 'firebase/firestore';
+
 type Data = {
-  blogArticles: IBlog[];
-  codePenWorkItems: IWork[];
-  designWorkItems: IWork[];
-  chromeWorkItems: IWork[];
-  activitiesList: IActivity[];
+  db?: firebase.firestore.Firestore,
+  qiitaBlogList: IBlog[];
+  codePenWorks: IWork[];
+  designWorks: IWork[];
+  otherWorks: IWork[];
+  activities: IActivity[];
   snsList: ISns[];
   shownProfile: boolean;
   themeColor: string;
 }
 
 export default Vue.extend({
-  async asyncData () {
-    const blogArticles = await qiitaApi
-      .getQiitaBlog()
-      .catch((error) => {
-        console.error(error);
-        return [];
-      });
-    return { blogArticles };
+  fetch () {
+    Promise.all([
+      this.loadedQiitaList(),
+      this.loadedWorksCodePen(),
+      this.loadedWorksDesign(),
+      this.loadedWorksOther(),
+      this.loadedActivities()
+    ]);
   },
 
   data (): Data {
     return {
-      blogArticles: [],
-      codePenWorkItems: require('~/assets/data/codePen'),
-      designWorkItems: require('~/assets/data/design'),
-      chromeWorkItems: require('~/assets/data/other'),
-      activitiesList: require('~/assets/data/activities'),
-      snsList: require('~/assets/data/sns'),
+      db: firebase.firestore(),
+      qiitaBlogList: [],
+      codePenWorks: [],
+      designWorks: [],
+      otherWorks: [],
+      activities: [],
+      snsList: [],
       shownProfile: false,
       themeColor: 'BLUE'
     };
   },
 
   created () {
-    this.blogArticles.sort((a: IBlog, b: IBlog) => {
+    this.qiitaBlogList.sort((a: IBlog, b: IBlog) => {
       return b.likeCount - a.likeCount;
     });
   },
@@ -155,6 +164,74 @@ export default Vue.extend({
   },
 
   methods: {
+    async loadedQiitaList () {
+      this.qiitaBlogList = await qiitaApi
+        .getQiitaBlog()
+        .then((res) => {
+          return res.sort((a:IBlog, b: IBlog) => b.likeCount - a.likeCount);
+        })
+        .catch((error) => {
+          console.error(error);
+          return [];
+        });
+    },
+
+    async loadedWorksCodePen () {
+      if (!this.db) { return; }
+      await this.db.collection('codepen').get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+            this.codePenWorks.push(doc.data() as IWork);
+          });
+          this.codePenWorks.sort((a: IWork, b: IWork) => {
+            return b.no - a.no;
+          });
+        })
+        .catch(error => console.error(error));
+    },
+
+    async loadedWorksDesign () {
+      if (!this.db) { return; }
+      await this.db.collection('design').get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+            this.designWorks.push(doc.data() as IWork);
+          });
+          this.designWorks.sort((a: IWork, b: IWork) => {
+            return b.no - a.no;
+          });
+        })
+        .catch(error => console.error(error));
+    },
+
+    loadedWorksOther () {
+      if (!this.db) { return; }
+      this.db.collection('other').get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+            this.otherWorks.push(doc.data() as IWork);
+          });
+          this.codePenWorks.sort((a: IWork, b: IWork) => {
+            return b.no - a.no;
+          });
+        })
+        .catch(error => console.error(error));
+    },
+
+    loadedActivities () {
+      if (!this.db) { return; }
+      this.db.collection('activities').get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+            this.activities.push(doc.data() as IActivity);
+          });
+          this.activities.sort((a: IActivity, b: IActivity) => {
+            return b.no - a.no;
+          });
+        })
+        .catch(error => console.error(error));
+    },
+
     styleOfScroll (shownProfile: boolean) {
       document.body.style.overflow = shownProfile ? 'auto' : 'hidden';
       this.shownProfile = !this.shownProfile;

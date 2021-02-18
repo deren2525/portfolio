@@ -1,36 +1,42 @@
 <template>
   <div class="sns-list">
-    <template v-if="snsList.length !== 0">
-      <div v-for="(sns, index) in snsList" :key="index" class="sns-list__item">
-        <p class="sns-list__icon">
-          <a :href="sns.url" target="_blank">
-            <img
-              :src="require(`~/assets/img/icon/${sns.img}`)"
-              draggable="false"
-              :alt="sns.name"
-            >
-          </a>
-        </p>
-        <div class="tooltip">
-          {{ sns.name }}
-        </div>
+    <div class="sns-list__item">
+      <p class="sns-list__icon">
+        <a href="https://twitter.com/study_dedede" target="_blank">
+          <img src="~/assets/img/icon/icon-twitter.svg" draggable="false" alt="Twitter">
+        </a>
+      </p>
+      <div class="tooltip">
+        Twitter
       </div>
-    </template>
+    </div>
+    <div class="sns-list__item">
+      <p class="sns-list__icon">
+        <a href="https://codepen.io/deren2525/" target="_blank">
+          <img src="~/assets/img/icon/icon-codepen.svg" draggable="false" alt="CodePen">
+        </a>
+      </p>
+      <div class="tooltip">
+        CodePen
+      </div>
+    </div>
+    <div class="sns-list__item">
+      <p class="sns-list__icon">
+        <a href="https://github.com/deren2525" target="_blank">
+          <img src="~/assets/img/icon/icon-github.svg" draggable="false" alt="GitHub">
+        </a>
+      </p>
+      <div class="tooltip">
+        GitHub
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 
-export default Vue.extend({
-  props: {
-    snsList: {
-      type: Array,
-      required: false,
-      default: () => []
-    }
-  }
-});
+export default Vue.extend({});
 </script>
 
 <style lang="scss" scoped>
