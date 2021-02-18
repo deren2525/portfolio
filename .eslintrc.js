@@ -1,20 +1,16 @@
 module.exports = {
   root: true,
   env: {
-    browser: true,
     node: true
   },
-  parserOptions: {
-    parser: '@typescript-eslint/parser',
-    sourceType: 'module'
-  },
-  extends: [
-    'plugin:vue/recommended',
-    'plugin:vue-scoped-css/recommended',
+  'extends': [
+    'plugin:vue/vue3-essential',
     'eslint:recommended',
-    '@nuxtjs/eslint-config-typescript'
+    '@vue/typescript/recommended'
   ],
-  // add your custom rules here
+  parserOptions: {
+    ecmaVersion: 2020
+  },
   rules: {
     // 使っていない変数でwarn
     'no-unused-vars': 'off',
@@ -55,12 +51,5 @@ module.exports = {
     'key-spacing': 2,
     // キーワードの前後には適切なスペースを
     'keyword-spacing': 2,
-    // functionを使用した記法を許可する
-    'object-shorthand': [0, 'methods'],
-    'no-tabs': 0
-  },
-  plugins: [
-    'vue',
-    '@typescript-eslint'
-  ]
+  }
 };

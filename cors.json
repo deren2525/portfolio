@@ -1,0 +1,6 @@
+[{
+  "origin": ["https://derennoportfolio.web.app/", "http://localhost:8080"],
+  "responseHeader": ["*"],
+  "method": ["GET"],
+  "maxAgeSeconds": 86400
+}]
