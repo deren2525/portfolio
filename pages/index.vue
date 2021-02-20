@@ -130,13 +130,17 @@ type Data = {
 
 export default Vue.extend({
   fetch () {
+    this.$accessor.setIsLoading(true);
     Promise.all([
       this.loadedQiitaList(),
       this.loadedWorksCodePen(),
       this.loadedWorksDesign(),
       this.loadedWorksOther(),
       this.loadedActivities()
-    ]);
+    ])
+      .finally(() => {
+        this.$accessor.setIsLoading(false);
+      });
   },
 
   data (): Data {

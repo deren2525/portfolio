@@ -1,6 +1,13 @@
 <template>
   <ul class="work-list">
-    <template v-if="items.length !== 0">
+    <template v-if="isLoading">
+      <li v-for="(item, idx) in Array(2)" :key="idx" class="work-list__list">
+        <div class="work-list__item">
+          <SkeletonScreen />
+        </div>
+      </li>
+    </template>
+    <template v-else>
       <li v-for="item in items" :key="item.id" class="work-list__list">
         <a :href="item.url" target="_blank">
           <div class="work-list__item">
@@ -34,6 +41,12 @@ export default Vue.extend({
       type: Array as PropType<IWork[]>,
       required: false,
       default: () => []
+    }
+  },
+
+  computed: {
+    isLoading (): boolean {
+      return this.$accessor.isLoading;
     }
   }
 });

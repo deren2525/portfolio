@@ -1,5 +1,4 @@
-import { Context } from '@nuxt/types'
-require('dotenv').config()
+require('dotenv').config();
 
 export interface EnvironmentsVariables {
   [key: string]: any; // environments[key]の型エラー対策
@@ -24,8 +23,4 @@ export const environments: EnvironmentsVariables = {
   static: process.static!,
   // custom environment value
   QIITA_TOKEN: process.env.QIITA_TOKEN!
-}
-
-export default (_context: Context, inject: (name: string, value: any) => any) => {
-  inject('environments', environments)
-}
+};
