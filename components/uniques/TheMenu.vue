@@ -39,12 +39,13 @@ export default Vue.extend({
 .the-menu {
   position: absolute;
   width: 90%;
-  height: 100%;
+  height: 100vh;
   max-width: 500px;
   background: $COLOR_MENU;
   pointer-events: auto;
   padding: 30px;
   transition: 0.3s;
+  box-sizing: border-box;
 
   &__close {
     width: 50px;

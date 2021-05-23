@@ -15,24 +15,12 @@
         <!-- Menu -->
         <div
           class="the-header__menu-icon"
-          @click="clickMenu(isOpen)"
+          @click="clickMenu()"
         >
           <span />
           <span />
           <span />
         </div>
-        <div
-          class="overlay"
-          :class="{'open': isOpen}"
-          @click="clickMenu(isOpen)"
-        />
-        <TheMenu
-          :menu-item="menuItem"
-          :is-open="isOpen"
-          class="the-header__menu"
-          :class="{'open': isOpen}"
-          @close="clickMenu(isOpen)"
-        />
       </div>
     </div>
   </div>
@@ -43,10 +31,6 @@ import Vue, { PropType } from 'vue';
 
 import { IMenu } from '~/types/utility/menu';
 
-type Data = {
-  isOpen :boolean;
-}
-
 export default Vue.extend({
   props: {
     menuItem: {
@@ -55,18 +39,8 @@ export default Vue.extend({
     }
   },
 
-  data (): Data {
-    return {
-      isOpen: false
-    };
-  },
-
   methods: {
     clickMenu () {
-      this.isOpen = !this.isOpen;
-      document.body.style.overflowY = this.isOpen ? 'hidden' : 'auto';
-    },
-    click () {
       this.$emit('click');
     }
   }
@@ -76,10 +50,10 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .the-header {
+  position: relative;
   width: 100%;
   height: 150px;
   background: $COLOR_HEADER;
-  overflow: hidden;
   transition: 0.8s;
 
   &__container {
@@ -139,37 +113,6 @@ export default Vue.extend({
         animation: toggle02 5000ms infinite;
       }
     }
-  }
-
-  &__menu {
-    position: absolute;
-    top: 0;
-    right: -100%;
-    z-index: $MENU_INDEX;
-    transition: 0.3s;
-
-    &.open {
-      transition: 0.3s;
-      right: 0;
-    }
-  }
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  visibility: hidden;
-  opacity: 0;
-  transition: .3s;
-  background: $COLOR_OVERLAY;
-  z-index: $MENU_OVERLAY_INDEX;
-
-  &.open {
-    visibility: visible;
-    opacity: .6;
   }
 }
 

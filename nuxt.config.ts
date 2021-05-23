@@ -72,6 +72,11 @@ const nuxtConfig: Configuration = {
         fs: 'empty'
       };
     },
+    postcss: {
+      preset: {
+        autoprefixer: { grid: 'autoplace' }
+      }
+    },
     transpile: [
       /typed-vuex/
     ]

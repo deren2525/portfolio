@@ -731,10 +731,11 @@ h1 {
       margin-bottom: 30px;
       @include text(normal, 900);
     }
+  }
 
-    &__more {
-      justify-content: center;
-      margin: 30px 0 0;
+  .list-work {
+    &__title {
+      display: none;
     }
   }
 
