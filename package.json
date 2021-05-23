@@ -14,10 +14,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "aos": "^2.3.4",
     "dayjs": "^1.10.4",
     "firebase": "^8.2.7",
     "normalize.css": "^8.0.1",
-    "nuxt": "^2.14.5"
+    "nuxt": "^2.14.5",
+    "swiper": "^6.5.8",
+    "vue-awesome-swiper": "^4.1.1"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.5",
@@ -30,6 +33,7 @@
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/style-resources": "^1.0.0",
     "@types/jest": "^26.0.14",
+    "@types/swiper": "^5.4.2",
     "@vue/test-utils": "^1.1.0",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",

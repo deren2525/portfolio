@@ -37,10 +37,12 @@ const nuxtConfig: Configuration = {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
-    '~/plugins/environments.ts',
-    '~/plugins/axios/axios-interceptor.ts',
-    '~/plugins/firebase.ts',
-    '~/plugins/gtag.js'
+    { src: '~/plugins/environments.ts' },
+    { src: '~/plugins/axios/axios-interceptor.ts' },
+    { src: '~/plugins/firebase.ts' },
+    { src: '~/plugins/gtag.js' },
+    { src: '~/plugins/swiper.js', mode: 'client' },
+    { src: '~/plugins/vue-aos.js', mode: 'client' }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
