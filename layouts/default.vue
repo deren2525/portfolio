@@ -1,12 +1,40 @@
 <template>
   <div>
+    <TheHeader
+      :menu-item="menuItem"
+    />
     <nuxt />
+    <TheFooter
+      :menu-item="menuItem"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-export default Vue.extend({});
+
+import { IMenu } from '~/types/utility/menu';
+
+type Data = {
+  menuItem: IMenu[];
+}
+
+export default Vue.extend({
+  data (): Data {
+    return {
+      menuItem: [
+        {
+          name: 'HOME',
+          link: '/'
+        },
+        {
+          name: 'WORKS',
+          link: '/work'
+        }
+      ]
+    };
+  }
+});
 </script>>
 
 <style lang="scss">
@@ -18,7 +46,7 @@ export default Vue.extend({});
   color: $COLOR_TEXT_WHITE;
 }
 
-@media screen and (max-width: $BREAKPOINT_SP) {
+@media screen and (max-width: $BREAKPOINT_MD) {
   .footer {
     align-items: center;
     margin-left: 0;
