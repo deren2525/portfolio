@@ -11,7 +11,7 @@
           data-aos="fade-right"
           data-aos-duration="1000"
         >
-          PROFILE
+          <span>PROFILE</span>
         </h1>
         <div
           data-aos="fade-up"
@@ -35,7 +35,7 @@
             <div class="profile__skill">
               <div class="profile__skill-inner">
                 <div class="profile__skill-title">
-                  Programming language
+                  Programming<br>language
                 </div>
                 <p>HTML / CSS</p>
                 <p>JavaScript</p>
@@ -65,7 +65,7 @@
           data-aos="fade-right"
           data-aos-duration="1000"
         >
-          WORKS
+          <span>WORKS</span>
         </h1>
         <div class="work__content">
           <!-- <div
@@ -85,7 +85,6 @@
           </div> -->
 
           <div
-            v-show="activeWorksTab === 'CODEPEN'"
             class="work__tab-content"
             data-aos="fade-left"
             data-aos-duration="1000"
@@ -196,7 +195,7 @@
           data-aos="fade-right"
           data-aos-duration="1000"
         >
-          BLOG（Qiita）
+          <span>BLOG（Qiita）</span>
         </h1>
         <ListBlog
           data-aos="fade-up"
@@ -212,7 +211,7 @@
           data-aos="fade-right"
           data-aos-duration="1000"
         >
-          Activities
+          <span>Activities</span>
         </h1>
         <ListActivities
           data-aos="fade-up"
@@ -432,7 +431,7 @@ h1 {
 
   &__container {
     @include container();
-    padding-top: 30px;
+      padding: 20px 0 100px 100px;
   }
 
   &__content {
@@ -454,6 +453,10 @@ h1 {
     width: 300px;
     height: 300px;
     margin: 0 30px 0 0;
+    object-fit: cover;
+    img {
+      height: auto;
+    }
   }
 
   &__text {
@@ -641,10 +644,13 @@ h1 {
 .view-all {
   display: flex;
   justify-content: flex-end;
-  margin: 60px 0 0;
+  width: 150px;
+  margin: 60px 0 0 auto;
   color: $COLOR_TEXT_WHITE;
+  text-align: center;
   @include text(large, 400);
   a {
+    width: 100%;
     display: inline-block;
     padding: 10px 0;
     color: $COLOR_TEXT_WHITE;
@@ -696,6 +702,10 @@ h1 {
 @media screen and (max-width: $BREAKPOINT_MD) {
   .profile {
     padding: 0 15px;
+
+    &__container {
+      padding-top: 20px;
+    }
   }
 
   .work {

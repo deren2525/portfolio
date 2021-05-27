@@ -155,10 +155,13 @@ export default Vue.extend({
 .view-all {
   display: flex;
   justify-content: flex-end;
-  margin: 60px 0 0;
+  width: 150px;
+  margin: 60px 0 0 auto;
   color: $COLOR_TEXT_BLACK;
+  text-align: center;
   @include text(large, 400);
   a {
+    width: 100%;
     display: inline-block;
     padding: 10px 0;
     color: $COLOR_TEXT_BLACK;

@@ -1,8 +1,7 @@
 <template>
   <div class="the-menu" tabindex="0">
-    <div class="the-menu__close" @click="close()">
-      ×
-    </div>
+    <div class="the-menu__close" @click="close()" />
+
     <ul class="the-menu__menu">
       <li v-for="(menu, idx) in menuItem" :key="idx" class="the-menu__item">
         <nuxt-link :to="menu.link" @click.native="close()">
@@ -37,25 +36,40 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .the-menu {
-  position: absolute;
-  width: 90%;
+  width: 50%;
   height: 100vh;
-  max-width: 500px;
   background: $COLOR_MENU;
   pointer-events: auto;
   padding: 30px;
   transition: 0.3s;
   box-sizing: border-box;
 
-  &__close {
+  &__close{
+    position: relative;
+    display: block;
     width: 50px;
     height: 50px;
-    line-height: 50px;
     margin-left: auto;
-    font-size: 500%;
-    color: $COLOR_MENU_TEXT;
-    text-align: right;
     cursor: pointer;
+
+    &:before,&:after {
+      position: absolute;
+      top: calc(14% - 5px);
+      left: 14%;
+      display: block;
+      width: 100%;
+      height: 3px;
+      background: $COLOR_BLACK;
+      transform: rotate(45deg);
+      transform-origin:0% 50%;
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+      transform-origin:100% 50%;
+      left: auto;
+      right: 14%;
+    }
   }
 
   &__menu {
@@ -80,10 +94,4 @@ export default Vue.extend({
   }
 }
 
-@media screen and (max-width: $BREAKPOINT_MD) {
-  .the-menu {
-    max-width: 50%;
-  }
-
-}
 </style>

@@ -3,7 +3,7 @@
     <div class="the-header__container">
       <div class="the-header__logo">
         <nuxt-link to="/">
-          DENEN no PORTFOLIO
+          DEREN no PORTFOLIO
         </nuxt-link>
       </div>
 
@@ -66,6 +66,7 @@ export default Vue.extend({
   }
 
   &__logo {
+    width: 100%;
     margin-right: auto;
     color: $COLOR_TEXT_WHITE;
     @include text(large, 400);

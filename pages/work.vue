@@ -180,7 +180,7 @@ export default Vue.extend({
   position: relative;
   width: $CONTAINER_WIDTH;
   margin: auto;
-  padding: 100px 0;
+  padding: 20px 0 100px;
 
  h1 {
     padding: 0;
@@ -194,7 +194,7 @@ export default Vue.extend({
 
   @media screen and (max-width: $BREAKPOINT_SM) {
     display: block;
-    padding: 60px 0;
+    padding: 30px 0;
   }
 }
 

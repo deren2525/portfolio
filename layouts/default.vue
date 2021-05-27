@@ -10,6 +10,7 @@
       @click="clickMenu(false)"
     />
     <TheMenu
+      v-scroll-lock="isMenuOpen"
       :menu-item="menuItem"
       class="the-menu"
       :class="{'open': isMenuOpen}"
@@ -50,8 +51,6 @@ export default Vue.extend({
   methods: {
     clickMenu (v: boolean) {
       this.isMenuOpen = v;
-      document.body.style.overflowY = this.isMenuOpen ? 'hidden' : 'auto';
-      document.documentElement.style.overflow = this.isMenuOpen ? 'hidden' : 'auto';
     }
   }
 });
@@ -90,7 +89,7 @@ export default Vue.extend({
 }
 
 .the-menu {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: -100%;
   z-index: $MENU_INDEX;

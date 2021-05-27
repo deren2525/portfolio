@@ -14,13 +14,15 @@
         class="list-work__list"
       >
         <a :href="item.url" target="_blank">
-          <div class="list-work__img">
-            <img
-              :src="item.imgSrc"
-              :alt="item.name"
-              draggable="false"
-            >
-            <span class="list-work__grad" />
+          <div class="list-work__img-wrapper">
+            <div class="list-work__img">
+              <img
+                :src="item.imgSrc"
+                :alt="item.name"
+                draggable="false"
+              >
+              <span class="list-work__grad" />
+            </div>
           </div>
           <div class="list-work__title">
             <p>No.{{ item.no }}</p>
@@ -124,12 +126,19 @@ export default Vue.extend({
     }
   }
 
+  &__img-wrapper {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
   &__img {
     position: relative;
-    width: 28vw;
-    height: 20vw;
+    width: 100%;
+    height: 100%;
     margin-left: auto;
     line-height: 0;
+    transition: 0.5s;
     &::before {
       display: block;
       padding-top: 66.6%; // 3:2

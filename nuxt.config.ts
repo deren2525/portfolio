@@ -42,7 +42,8 @@ const nuxtConfig: Configuration = {
     { src: '~/plugins/firebase.ts' },
     { src: '~/plugins/gtag.js' },
     { src: '~/plugins/swiper.js', mode: 'client' },
-    { src: '~/plugins/vue-aos.js', mode: 'client' }
+    { src: '~/plugins/vue-aos.js', mode: 'client' },
+    { src: '~/plugins/v-scroll-lock.js', mode: 'client' }
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
