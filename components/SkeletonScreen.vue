@@ -29,7 +29,7 @@ export default Vue.extend({});
   }
 }
 
-@media screen and (max-width: $BREAKPOINT_SP) {
+@media screen and (max-width: $BREAKPOINT_MD) {
   .skeleton-screen {
       height: auto;
   }

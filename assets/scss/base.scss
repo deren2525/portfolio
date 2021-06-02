@@ -1,11 +1,60 @@
-@import url("https://fonts.googleapis.com/css?family=Noto+Sans+JP:400,700&display=swap&subset=japanese");
-@import url("https://fonts.googleapis.com/css?family=M+PLUS+1p:400,700&display=swap");
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap");
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 200;
+  src: url('../fonts/montserrat-v15-latin-200.eot'); /* IE9 Compat Modes */
+  src: local(''),
+      url('../fonts/montserrat-v15-latin-200.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+      url('../fonts/montserrat-v15-latin-200.woff2') format('woff2'), /* Super Modern Browsers */
+      url('../fonts/montserrat-v15-latin-200.woff') format('woff'), /* Modern Browsers */
+      url('../fonts/montserrat-v15-latin-200.ttf') format('truetype'), /* Safari, Android, iOS */
+      url('../fonts/montserrat-v15-latin-200.svg#Montserrat') format('svg'); /* Legacy iOS */
+}
+/* montserrat-regular - latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/montserrat-v15-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local(''),
+      url('../fonts/montserrat-v15-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+      url('../fonts/montserrat-v15-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+      url('../fonts/montserrat-v15-latin-regular.woff') format('woff'), /* Modern Browsers */
+      url('../fonts/montserrat-v15-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+      url('../fonts/montserrat-v15-latin-regular.svg#Montserrat') format('svg'); /* Legacy iOS */
+}
+/* montserrat-700 - latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/montserrat-v15-latin-700.eot'); /* IE9 Compat Modes */
+  src: local(''),
+      url('../fonts/montserrat-v15-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+      url('../fonts/montserrat-v15-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+      url('../fonts/montserrat-v15-latin-700.woff') format('woff'), /* Modern Browsers */
+      url('../fonts/montserrat-v15-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+      url('../fonts/montserrat-v15-latin-700.svg#Montserrat') format('svg'); /* Legacy iOS */
+}
+/* montserrat-900 - latin */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 900;
+  src: url('../fonts/montserrat-v15-latin-900.eot'); /* IE9 Compat Modes */
+  src: local(''),
+      url('../fonts/montserrat-v15-latin-900.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+      url('../fonts/montserrat-v15-latin-900.woff2') format('woff2'), /* Super Modern Browsers */
+      url('../fonts/montserrat-v15-latin-900.woff') format('woff'), /* Modern Browsers */
+      url('../fonts/montserrat-v15-latin-900.ttf') format('truetype'), /* Safari, Android, iOS */
+      url('../fonts/montserrat-v15-latin-900.svg#Montserrat') format('svg'); /* Legacy iOS */
+}
 
 html, body, #__nuxt, #__layout, .default  {
   width: 100%;
   height: auto;
   box-sizing: border-box;
+  position: relative;
 }
 
 html {
@@ -16,18 +65,21 @@ html {
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+  transition: 0.8s;
 }
 
 body {
   height: 100%;
-  font-family: "Montserrat", "M PLUS 1p", "Noto Sans JP", "Roboto", sans-serif;
-  background: $COLOR_ACCENT;
-  @include text(small, regular);
+  font-family: "Montserrat", sans-serif;
+  background: $COLOR_CONTAINER;
+  @include text(small, 400);
+  overflow-x: hidden;
 }
 
 * {
   box-sizing: border-box;
-  transition: 0.8s;
+  // transition: 0.8s;
   &::before,
   &::after {
     content: "";
@@ -38,15 +90,11 @@ h1,
 h2 {
   margin: 0;
   line-height: 6rem;
-  @include text(large, bold);
-  color: $COLOR_TEXT;
+  @include text(large, 900);
 }
-h3 {
-  color: $COLOR_TEXT;
-}
+
 p {
-  @include text(small, regular);
-  color: $COLOR_TEXT;
+  @include text(small, 400);
 }
 
 a {
@@ -72,9 +120,9 @@ img {
   display: none;
 }
 
-@media screen and (max-width: $BREAKPOINT_SP) {
+@media screen and (max-width: $BREAKPOINT_MD) {
   h2 {
-    @include text(normal, bold);
+    @include text(normal, 900);
   }
 
   p {

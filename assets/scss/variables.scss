@@ -2,40 +2,62 @@
 
 // text styles
 $text-sizes: (
+  huge: 5.0rem,
   large: 2.4rem,
   normal: 2rem,
   small: 1.6rem
 );
 
+$text-sizes-sp: (
+  huge: 2.4rem,
+  large: 2rem,
+  normal: 1.6rem,
+  small: 1.4rem
+);
+
 $text-weights: (
-  bold: 900,
-  regular: 400
+  200: 200,
+  400: 400,
+  700: 700,
+  900: 900
 );
 
 @mixin text($size, $thickness) {
-  font-family: "Montserrat", "M PLUS 1p", "Noto Sans JP", "Roboto", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-size: map-get($text-sizes, $size);
   font-weight: map-get($text-weights, $thickness);
+
+  @media screen and (max-width: $BREAKPOINT_SM) {
+    font-size: map-get($text-sizes-sp, $size);
+  }
 }
 
 $COLOR_CONTAINER: var(--color-container);
-$COLOR_ACCENT: var(--color-accent);
 $COLOR_BLACK: var(--color-black);
+$COLOR_WHITE: var(--color-white);
 $COLOR_TEXT : var(--color-text);
 $COLOR_TEXT_BLACK : var(--color-text-black);
 $COLOR_TEXT_WHITE : var(--color-text-white);
 $COLOR_LINK: var(--color-link);
 $COLOR_LINK_HOVER: var(--color-link-hover);
-$COLOR_INITIAL_BG: var(--color-initial-bg);
-$COLOR_INITIAL_TEXT: var(--color-initial-text);
 $COLOR_OVERLAY: rgba(var(--color-overlay-r), var(--color-overlay-g), var(--color-overlay-b), 0.8);
 $COLOR_OVERLAY_TEXT: var(--color-overlay-text);
+$COLOR_MENU: var(--color-menu);
+$COLOR_MENU_TEXT: var(--color-menu-text);
+$COLOR_TAB: var(--color-tab);
+$COLOR_HEADER: var(--color-header);
+$COLOR_FOOTER: var(--color-footer);
+$COLOR_GRAY: var(--color-gray);
 
 // z-index
-$PROFILE_CONTENT_OVERLAY: 5;
-$PROFILE_CONTENT: 10;
+$MENU_OVERLAY_INDEX: 999;
+$MENU_INDEX: 9999;
+$HEADER_INDEX: 1000;
 
-$BREAKPOINT_SP: 768px;
+$CONTAINER_WIDTH : 960px;
+
+$BREAKPOINT_MD: 959px;
+$BREAKPOINT_SM: 760px;
 
 // link
 @mixin link-border {
