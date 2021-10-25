@@ -25,6 +25,9 @@
 import Vue from 'vue';
 
 import { IMenu } from '~/types/utility/menu';
+import TheHeader from '~/components/uniques/TheHeader.vue';
+import TheMenu from '~/components/uniques/TheMenu.vue';
+import TheFooter from '~/components/uniques/TheFooter.vue';
 
 type Data = {
   menuItem: IMenu[];
@@ -32,6 +35,12 @@ type Data = {
 }
 
 export default Vue.extend({
+  components: {
+    TheHeader,
+    TheMenu,
+    TheFooter
+  },
+
   data (): Data {
     return {
       menuItem: [

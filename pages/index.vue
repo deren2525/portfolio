@@ -226,6 +226,8 @@
 <script lang="ts">
 import Vue from 'vue';
 
+import TheThemeColor from '~/components/uniques/TheThemeColor.vue';
+
 import * as Swiper from 'swiper';
 
 import { IBlog } from '~/types/blog';
@@ -256,6 +258,10 @@ type Data = {
 }
 
 export default Vue.extend({
+  components: {
+    TheThemeColor
+  },
+
   fetch () {
     this.loadedQiitaList();
     this.loadedWorksCodePen();
