@@ -226,9 +226,11 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import TheThemeColor from '~/components/uniques/TheThemeColor.vue';
-
 import * as Swiper from 'swiper';
+import { Firestore, getFirestore, getDocs, collection, QueryDocumentSnapshot } from 'firebase/firestore';
+import firebaseApp from '~/plugins/firebase';
+
+import TheThemeColor from '~/components/uniques/TheThemeColor.vue';
 
 import { IBlog } from '~/types/blog';
 import { IWork } from '~/types/work';
@@ -237,11 +239,8 @@ import { ISns } from '~/types/sns';
 
 import qiitaApi from '~/repository/qiita';
 
-import firebase from '~/plugins/firebase';
-import 'firebase/firestore';
-
 type Data = {
-  db?: firebase.firestore.Firestore,
+  db?: Firestore | null;
   qiitaListBlog: IBlog[];
   codePenWorks: IWork[];
   designWorks: IWork[];
@@ -262,7 +261,9 @@ export default Vue.extend({
     TheThemeColor
   },
 
-  fetch () {
+  async fetch () {
+    this.db = await getFirestore(firebaseApp);
+
     this.loadedQiitaList();
     this.loadedWorksCodePen();
     // this.loadedWorksDesign();
@@ -272,7 +273,7 @@ export default Vue.extend({
 
   data (): Data {
     return {
-      db: firebase.firestore(),
+      db: null,
       qiitaListBlog: [],
       codePenWorks: [],
       designWorks: [],
@@ -320,9 +321,9 @@ export default Vue.extend({
 
     async loadedWorksCodePen () {
       if (!this.db) { return; }
-      await this.db.collection('codepen').get()
+      await getDocs(collection(this.db, 'codepen'))
         .then((querySnapshot) => {
-          querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+          querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
             this.codePenWorks.push(doc.data() as IWork);
           });
           this.codePenWorks.sort((a: IWork, b: IWork) => {
@@ -334,9 +335,9 @@ export default Vue.extend({
 
     async loadedWorksDesign () {
       if (!this.db) { return; }
-      await this.db.collection('design').get()
+      await getDocs(collection(this.db, 'design'))
         .then((querySnapshot) => {
-          querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+          querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
             this.designWorks.push(doc.data() as IWork);
           });
           this.designWorks.sort((a: IWork, b: IWork) => {
@@ -346,11 +347,11 @@ export default Vue.extend({
         .catch(error => console.error(error));
     },
 
-    loadedWorksOther () {
+    async loadedWorksOther () {
       if (!this.db) { return; }
-      this.db.collection('other').get()
+      await getDocs(collection(this.db, 'other'))
         .then((querySnapshot) => {
-          querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+          querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
             this.otherWorks.push(doc.data() as IWork);
           });
           this.otherWorks.sort((a: IWork, b: IWork) => {
@@ -360,11 +361,11 @@ export default Vue.extend({
         .catch(error => console.error(error));
     },
 
-    loadedActivities () {
+    async loadedActivities () {
       if (!this.db) { return; }
-      this.db.collection('activities').get()
+      await getDocs(collection(this.db, 'activities'))
         .then((querySnapshot) => {
-          querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+          querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
             this.activities.push(doc.data() as IActivity);
           });
           this.activities.sort((a: IActivity, b: IActivity) => {

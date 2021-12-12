@@ -48,15 +48,13 @@
 <script lang="ts">
 import Vue from 'vue';
 
-import * as Swiper from 'swiper';
+import { Firestore, getFirestore, getDocs, collection, QueryDocumentSnapshot } from 'firebase/firestore';
+import firebaseApp from '~/plugins/firebase';
 
 import { IWork } from '~/types/work';
 
-import firebase from '~/plugins/firebase';
-import 'firebase/firestore';
-
 type Data = {
-  db?: firebase.firestore.Firestore,
+  db?: Firestore | null;
   codePenWorks: IWork[];
   designWorks: IWork[];
   otherWorks: IWork[];
@@ -70,7 +68,9 @@ type Data = {
 }
 
 export default Vue.extend({
-  fetch () {
+  async fetch () {
+    this.db = await getFirestore(firebaseApp);
+
     this.loadedWorksCodePen()
       .finally(() => {
         this.codepenLoading = false;
@@ -87,7 +87,7 @@ export default Vue.extend({
 
   data (): Data {
     return {
-      db: firebase.firestore(),
+      db: null,
       codePenWorks: [],
       designWorks: [],
       otherWorks: [],
@@ -107,24 +107,11 @@ export default Vue.extend({
   },
 
   methods: {
-    swiperOptions (key: string): Swiper.SwiperOptions {
-      return {
-        spaceBetween: 20,
-        slidesPerView: 2,
-        slidesPerColumn: 2,
-        slidesPerColumnFill: 'row',
-        navigation: {
-          prevEl: `.prev-button--${key}`,
-          nextEl: `.next-button--${key}`
-        }
-      };
-    },
-
     async loadedWorksCodePen () {
       if (!this.db) { return; }
-      await this.db.collection('codepen').get()
+      await getDocs(collection(this.db, 'codepen'))
         .then((querySnapshot) => {
-          querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+          querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
             this.codePenWorks.push(doc.data() as IWork);
           });
           this.codePenWorks.sort((a: IWork, b: IWork) => {
@@ -136,9 +123,9 @@ export default Vue.extend({
 
     async loadedWorksDesign () {
       if (!this.db) { return; }
-      await this.db.collection('design').get()
+      await getDocs(collection(this.db, 'design'))
         .then((querySnapshot) => {
-          querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+          querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
             this.designWorks.push(doc.data() as IWork);
           });
           this.designWorks.sort((a: IWork, b: IWork) => {
@@ -150,9 +137,9 @@ export default Vue.extend({
 
     async loadedWorksOther () {
       if (!this.db) { return; }
-      await this.db.collection('other').get()
+      await getDocs(collection(this.db, 'other'))
         .then((querySnapshot) => {
-          querySnapshot.forEach((doc: firebase.firestore.QueryDocumentSnapshot) => {
+          querySnapshot.forEach((doc: QueryDocumentSnapshot) => {
             this.otherWorks.push(doc.data() as IWork);
           });
           this.otherWorks.sort((a: IWork, b: IWork) => {
