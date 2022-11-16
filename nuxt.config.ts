@@ -1,7 +1,7 @@
-import { Configuration } from '@nuxt/types';
+import { defineNuxtConfig } from '@nuxt/bridge';
 const Sass = require('sass');
 
-const nuxtConfig: Configuration = {
+export default defineNuxtConfig({
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
 
@@ -53,7 +53,6 @@ const nuxtConfig: Configuration = {
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
     '@nuxtjs/style-resources',
     'nuxt-typed-vuex'
   ],
@@ -66,19 +65,12 @@ const nuxtConfig: Configuration = {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    /*
-    ** You can extend webpack config here
-    */
     extend (config: any) {
       config.node = {
         fs: 'empty'
       };
     },
-    postcss: {
-      preset: {
-        autoprefixer: { grid: 'autoplace' }
-      }
-    },
+    postcss: {},
     transpile: [
       /typed-vuex/
     ],
@@ -87,15 +79,5 @@ const nuxtConfig: Configuration = {
         implementation: Sass
       }
     }
-  },
-
-  /*
-  ** Typescript options
-  */
-  typescript: {
-    typeCheck: true,
-    ignoreNotFoundWarnings: true
   }
-};
-
-export default nuxtConfig;
+});
