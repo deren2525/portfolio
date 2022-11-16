@@ -1,4 +1,5 @@
 import { Configuration } from '@nuxt/types';
+const Sass = require('sass');
 
 const nuxtConfig: Configuration = {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
@@ -80,7 +81,12 @@ const nuxtConfig: Configuration = {
     },
     transpile: [
       /typed-vuex/
-    ]
+    ],
+    loaders: {
+      scss: {
+        implementation: Sass
+      }
+    }
   },
 
   /*
